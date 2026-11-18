@@ -1,0 +1,4012 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Loss Plan — Control 5 Semanas</title>
+  <style>
+    :root {
+      --bg-outer: #F3F4F6;
+      --bg-app: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --bg-soft: #F7F8FA;
+      --bg-pill: #F2F3F5;
+      --ink: #111111;
+      --ink-muted: #71757D;
+      --coral: #EF4444;
+      --green: #16A34A;
+      --red: #DC2626;
+      --blue: #2563EB;
+      --cyan: #0891B2;
+      --amber: #F59E0B;
+      --purple: #9333EA;
+      --amber-bg: rgba(245, 158, 11, 0.12);
+      --border: rgba(17, 17, 17, 0.08);
+      --shadow-card: 0 6px 24px rgba(17, 17, 17, 0.05);
+      --shadow-float: 0 14px 32px rgba(17, 17, 17, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-outer);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background-color: var(--bg-app);
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 98px;
+      position: relative;
+      box-shadow: 0 24px 60px rgba(20, 20, 20, 0.14);
+    }
+
+    @media (min-width: 600px) {
+      body { padding: 16px 12px; }
+      .app-shell {
+        min-height: calc(100vh - 32px);
+        border-radius: 36px;
+        border: 1px solid var(--border);
+        overflow-x: hidden;
+      }
+    }
+
+    /* Header */
+    .app-header {
+      padding: 18px 18px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .header-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .phase-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .phase-select {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink);
+      max-width: 225px;
+      text-overflow: ellipsis;
+      cursor: pointer;
+    }
+
+    .btn-circle-sm {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 800;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .weight-badge-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: var(--shadow-card);
+      flex-shrink: 0;
+    }
+
+    .dot-green {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+
+    .weight-badge-text {
+      text-align: left;
+      line-height: 1.15;
+    }
+
+    .weight-badge-main {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .weight-badge-sub {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--coral);
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 6px 18px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex: 1;
+    }
+
+    /* Cards & Layout Utilities */
+    .card {
+      background: var(--bg-card);
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-card);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .card-sub {
+      font-size: 12.5px;
+      color: var(--ink-muted);
+      font-weight: 500;
+    }
+
+    .row-between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .soft-box {
+      background: var(--bg-app);
+      border-radius: 16px;
+      padding: 10px 12px;
+      border: 1px solid rgba(20, 20, 20, 0.04);
+    }
+
+    /* Buttons & Pills */
+    .btn-pill-dark {
+      background: var(--ink);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .btn-pill-dark:active, .btn-pill-soft:active, .btn-pill-green:active {
+      transform: scale(0.97);
+    }
+
+    .btn-pill-soft {
+      background: var(--bg-pill);
+      color: var(--ink);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .btn-pill-green {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .badge-green { background: rgba(34, 160, 107, 0.14); color: #197D52; }
+    .badge-coral { background: rgba(224, 90, 71, 0.14); color: #BE4130; }
+    .badge-red { background: rgba(217, 56, 58, 0.14); color: #B42729; }
+    .badge-amber { background: rgba(245, 158, 11, 0.18); color: #B45309; }
+    .badge-neutral { background: var(--bg-pill); color: var(--ink-muted); }
+
+    .alert-amber {
+      background: var(--amber-bg);
+      border: 1px solid rgba(217, 119, 6, 0.35);
+      color: #92400E;
+      border-radius: 14px;
+      padding: 9px 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    /* Week & Day Selector */
+    .week-pills {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .week-pills::-webkit-scrollbar { display: none; }
+
+    .week-pill {
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: none;
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--bg-pill);
+      color: var(--ink-muted);
+      cursor: pointer;
+    }
+    .week-pill.active {
+      background: var(--ink);
+      color: #fff;
+    }
+    .week-pill.week-pass {
+      background: rgba(34, 160, 107, 0.18);
+      color: #197D52;
+      border: 1px solid rgba(34, 160, 107, 0.35);
+    }
+    .week-pill.week-fail {
+      background: rgba(217, 56, 58, 0.18);
+      color: #B42729;
+      border: 1px solid rgba(217, 56, 58, 0.35);
+    }
+    .week-pill.active.week-pass {
+      background: var(--green);
+      color: #fff;
+    }
+    .week-pill.active.week-fail {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .day-btn {
+      background: transparent;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      padding: 2px 0;
+    }
+
+    .day-letter {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink-muted);
+    }
+
+    .day-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      background: var(--bg-pill);
+      color: var(--ink);
+    }
+
+    .day-circle.selected { background: var(--coral); color: #fff; }
+    .day-circle.pass { background: var(--green); color: #fff; }
+    .day-circle.fail { background: var(--red); color: #fff; }
+    .day-circle.selected.pass { box-shadow: 0 0 0 2.5px var(--ink); }
+    .day-circle.selected.fail { box-shadow: 0 0 0 2.5px var(--ink); }
+
+    .day-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: transparent;
+    }
+    .day-dot.has-data { background: var(--ink); }
+    .day-dot.pass { background: var(--green); }
+    .day-dot.fail { background: var(--red); }
+
+    /* 28-segment Vertical Tick Bar */
+    .tick-bar-28 {
+      display: grid;
+      grid-template-columns: repeat(28, 1fr);
+      gap: 3px;
+      height: 24px;
+      margin: 12px 0;
+    }
+    .tick-seg {
+      border-radius: 2px;
+      background: #E4E6E1;
+      height: 100%;
+    }
+    .tick-seg.filled { background: var(--ink); }
+    .tick-seg.success { background: var(--green); }
+    .tick-seg.over { background: var(--red); }
+
+    /* Macro Progress Bars */
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(20, 20, 20, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    /* Meal List Items */
+    .meal-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: var(--bg-app);
+      padding: 11px 13px;
+      border-radius: 16px;
+      margin-top: 8px;
+    }
+
+    .btn-del-xs {
+      min-width: 34px;
+      min-height: 34px;
+      padding: 0 8px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-del-xs {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: none;
+      background: #fff;
+      color: var(--ink-muted);
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Habit Toggles */
+    .habit-card {
+      border: none;
+      border-radius: 18px;
+      padding: 11px;
+      text-align: left;
+      background: var(--bg-app);
+      color: var(--ink);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .habit-card.active {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    /* Inputs */
+    .input-field, .select-field {
+      width: 100%;
+      min-height: 42px;
+      padding: 10px 13px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--bg-app);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      font-family: inherit;
+    }
+    .input-field:focus, .select-field:focus {
+      outline: 2px solid var(--ink);
+      background: #fff;
+    }
+
+    /* Bottom Floating Navigation */
+    .bottom-nav-wrap {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 28px);
+      max-width: 452px;
+      z-index: 40;
+    }
+
+    .bottom-nav {
+      background: var(--ink);
+      border-radius: 999px;
+      padding: 5px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      box-shadow: var(--shadow-float);
+    }
+
+    .nav-btn {
+      border: none;
+      background: transparent;
+      color: #9DA29E;
+      border-radius: 999px;
+      padding: 11px 4px;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .nav-btn.active {
+      background: #FFFFFF;
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 20, 20, 0.56);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      z-index: 60;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #FFFFFF;
+      width: 100%;
+      max-width: 440px;
+      border-radius: 28px;
+      padding: 18px;
+      max-height: 90vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Chat */
+    .chat-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 360px;
+      min-height: 230px;
+      overflow-y: auto;
+      padding: 4px 2px;
+    }
+
+    .msg-bubble {
+      max-width: 86%;
+      padding: 10px 13px;
+      border-radius: 18px;
+      font-size: 12.5px;
+      line-height: 1.45;
+      white-space: pre-line;
+    }
+    .msg-user {
+      align-self: flex-end;
+      background: var(--ink);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    .msg-bot {
+      align-self: flex-start;
+      background: #fff;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+    }
+
+    /* Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+    .data-table th {
+      text-align: left;
+      padding: 7px 4px;
+      color: var(--ink-muted);
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
+    }
+    .data-table td {
+      padding: 8px 4px;
+      border-bottom: 1px solid rgba(20, 20, 20, 0.04);
+      font-weight: 600;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: #fff;
+      padding: 9px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    .toast.show { opacity: 1; }
+
+    @keyframes pulseMic {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    .mic-recording {
+      background: var(--coral) !important;
+      color: #fff !important;
+      animation: pulseMic 1s infinite;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-top-row">
+      <div class="phase-controls">
+        <select id="phase-select" class="phase-select" aria-label="Seleccionar fase del plan"></select>
+        <button type="button" class="btn-circle-sm" data-action="open-new-phase" title="Extender plan o crear nueva fase">+</button>
+      </div>
+      <button type="button" class="btn-pill-dark" style="padding:7px 13px;font-size:11.5px;flex-shrink:0;" data-action="open-weight-modal">Registrar peso</button>
+    </div>
+    <h1 class="page-title" id="page-title">Check Diario</h1>
+  </header>
+
+  <!-- MAIN VIEWPORT -->
+  <main class="main-content" id="main-viewport"></main>
+
+  <!-- BOTTOM NAVIGATION -->
+  <div class="bottom-nav-wrap">
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-btn active" data-nav="hoy">Hoy</button>
+      <button type="button" class="nav-btn" data-nav="chat">Chat y Voz</button>
+      <button type="button" class="nav-btn" data-nav="progreso">Progreso</button>
+      <button type="button" class="nav-btn" data-nav="objetivos">Objetivos</button>
+    </nav>
+  </div>
+</div>
+
+<!-- MODAL: REGISTRO SEMANAL DE PESO Y GRASA -->
+<div class="modal-backdrop" id="modal-weight">
+  <div class="modal-box">
+    <div class="row-between">
+      <div>
+        <h3 class="card-title" style="font-size:16px;">Registro Semanal de Peso</h3>
+        <p class="card-sub">Compara peso, % grasa, masa grasa y masa sin grasa</p>
+      </div>
+      <button type="button" class="btn-pill-soft" data-action="close-modal" data-target="modal-weight">✕</button>
+    </div>
+
+    <form id="form-weight" style="display:flex;flex-direction:column;gap:10px;">
+      <div>
+        <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">Semana de control</label>
+        <select id="fw-week" class="select-field"></select>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">Peso Total (kg)</label>
+          <input type="number" step="0.05" id="fw-weight" class="input-field" required />
+        </div>
+        <div>
+          <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;color:var(--coral);">% Grasa Corporal</label>
+          <input type="number" step="0.1" id="fw-bf" class="input-field" required />
+        </div>
+      </div>
+
+      <div class="soft-box" style="display:flex;flex-direction:column;gap:8px;">
+        <div class="row-between">
+          <span style="font-size:11px;font-weight:800;">Desglose Masa (kg)</span>
+          <button type="button" class="btn-pill-soft" style="padding:3px 8px;font-size:10px;" data-action="recalc-fw-mass">Autocalcular</button>
+        </div>
+        <div class="grid-2">
+          <div>
+            <label class="card-sub" style="display:block;font-weight:700;margin-bottom:3px;color:var(--coral);">Masa Grasa (kg)</label>
+            <input type="number" step="0.01" id="fw-fat-kg" class="input-field" style="background:#fff;" required />
+          </div>
+          <div>
+            <label class="card-sub" style="display:block;font-weight:700;margin-bottom:3px;color:var(--green);">Masa Sin Grasa (kg)</label>
+            <input type="number" step="0.01" id="fw-lean-kg" class="input-field" style="background:#fff;" required />
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">Cintura (cm) · opc.</label>
+          <input type="number" step="0.5" id="fw-waist" placeholder="Ej. 74.0" class="input-field" />
+        </div>
+        <div>
+          <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">Dominadas limpias · opc.</label>
+          <input type="number" id="fw-pullups" placeholder="Ej. 5" class="input-field" />
+        </div>
+      </div>
+
+      <label style="display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;padding:8px;background:var(--bg-app);border-radius:12px;cursor:pointer;">
+        <input type="checkbox" id="fw-update-base" />
+        <span>Actualizar también como datos base de esta fase</span>
+      </label>
+
+      <button type="submit" class="btn-pill-dark" style="width:100%;padding:12px;font-size:13px;">Guardar Registro Semanal ✓</button>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: AÑADIR ALIMENTO POR GRAMOS / UNIDADES O COMBOS -->
+<div class="modal-backdrop" id="modal-food">
+  <div class="modal-box">
+    <div class="row-between">
+      <div>
+        <h3 class="card-title" style="font-size:16px;" id="mf-title">Añadir a Desayuno</h3>
+        <p class="card-sub">Elige gramos/ml exactos, unidades o combos guardados</p>
+      </div>
+      <button type="button" class="btn-pill-soft" data-action="close-modal" data-target="modal-food">✕</button>
+    </div>
+
+    <div class="grid-2" style="background:var(--bg-app);padding:4px;border-radius:999px;">
+      <button type="button" id="mf-tab-foods" class="btn-pill-dark" data-action="switch-mf-mode" data-mode="foods">Alimentos (g / uds)</button>
+      <button type="button" id="mf-tab-combos" class="btn-pill-soft" style="border:none;" data-action="switch-mf-mode" data-mode="combos">Combos Guardados</button>
+    </div>
+
+    <input type="text" id="mf-search" class="input-field" placeholder="Buscar (huevo, claras, cottage, mango, pollo...)" />
+
+    <!-- Configurador de Gramos / Unidades -->
+    <div id="mf-portion-box" class="soft-box" style="display:none;flex-direction:column;gap:8px;border:1.5px solid var(--ink);background:#fff;">
+      <div class="row-between">
+        <div>
+          <span class="badge badge-green" style="font-size:10px;">Cantidad Exacta</span>
+          <h4 class="card-title" id="mfp-name" style="margin-top:3px;">Alimento</h4>
+          <p class="card-sub" id="mfp-base-desc">Base 100g: 0 kcal</p>
+        </div>
+        <button type="button" class="btn-pill-soft" data-action="clear-selected-food">Cambiar</button>
+      </div>
+
+      <!-- Unidades -->
+      <div id="mfp-unit-section" class="soft-box" style="display:none;flex-direction:column;gap:6px;">
+        <div class="row-between">
+          <span style="font-size:11px;font-weight:800;" id="mfp-unit-label">Por unidades</span>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button type="button" class="btn-pill-soft" style="padding:4px 10px;" data-action="step-unit" data-delta="-1">−</button>
+            <input type="number" step="0.5" min="0.5" id="mfp-units" value="1" class="input-field" style="width:64px;text-align:center;padding:5px;" />
+            <button type="button" class="btn-pill-dark" style="padding:4px 10px;" data-action="step-unit" data-delta="1">+</button>
+          </div>
+        </div>
+        <div class="grid-4">
+          <button type="button" class="btn-pill-soft" data-action="set-units" data-val="1">1 ud</button>
+          <button type="button" class="btn-pill-soft" data-action="set-units" data-val="2">2 uds</button>
+          <button type="button" class="btn-pill-soft" data-action="set-units" data-val="3">3 uds</button>
+          <button type="button" class="btn-pill-soft" data-action="set-units" data-val="4">4 uds</button>
+        </div>
+      </div>
+
+      <!-- Gramos / ml -->
+      <div class="soft-box" style="display:flex;flex-direction:column;gap:6px;">
+        <div class="row-between">
+          <span style="font-size:11px;font-weight:800;" id="mfp-grams-label">Gramos / ml exactos</span>
+          <div style="display:flex;align-items:center;gap:4px;">
+            <input type="number" step="1" min="1" id="mfp-grams" value="100" class="input-field" style="width:78px;text-align:right;padding:5px 8px;background:#fff;" />
+            <span style="font-size:11px;font-weight:800;" id="mfp-grams-unit">g</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:4px;">
+          <button type="button" class="btn-pill-soft" style="padding:5px 2px;" data-action="set-grams" data-val="30">30</button>
+          <button type="button" class="btn-pill-soft" style="padding:5px 2px;" data-action="set-grams" data-val="50">50</button>
+          <button type="button" class="btn-pill-soft" style="padding:5px 2px;" data-action="set-grams" data-val="60">60</button>
+          <button type="button" class="btn-pill-soft" style="padding:5px 2px;" data-action="set-grams" data-val="100">100</button>
+          <button type="button" class="btn-pill-soft" style="padding:5px 2px;" data-action="set-grams" data-val="150">150</button>
+          <button type="button" class="btn-pill-soft" style="padding:5px 2px;" data-action="set-grams" data-val="200">200</button>
+        </div>
+      </div>
+
+      <!-- Vista previa macros -->
+      <div style="background:var(--ink);color:#fff;border-radius:14px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;font-size:12px;">
+        <div>
+          <span style="font-size:10px;opacity:0.75;display:block;">Total calculado</span>
+          <strong id="mfp-calc-kcal" style="font-size:15px;">0 kcal</strong>
+        </div>
+        <div style="display:flex;gap:10px;font-weight:700;">
+          <span>P: <strong id="mfp-calc-p" style="color:#60A5FA;">0g</strong></span>
+          <span>C: <strong id="mfp-calc-c" style="color:#22D3EE;">0g</strong></span>
+          <span>G: <strong id="mfp-calc-f" style="color:#FBBF24;">0g</strong></span>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <button type="button" class="btn-pill-soft" data-action="add-to-basket">+ Sumar al plato</button>
+        <button type="button" class="btn-pill-green" data-action="commit-single-food">Registrar Ahora ✓</button>
+      </div>
+    </div>
+
+    <!-- Entrada Manual de Macros (para alimentos fuera de lista) -->
+    <div id="mf-manual-box" class="soft-box" style="display:none;flex-direction:column;gap:8px;border:1.5px solid var(--ink);background:#fff;">
+      <div class="row-between">
+        <div>
+          <span class="badge badge-amber" style="font-size:10px;">Registro Manual Libre</span>
+          <h4 class="card-title" style="margin-top:3px;">Añadir macros exactos</h4>
+        </div>
+        <button type="button" class="btn-pill-soft" data-action="close-manual-box">✕</button>
+      </div>
+      <input type="text" id="mfm-name" class="input-field" placeholder="Nombre del alimento o comida (ej. Café con leche, Cena fuera)" />
+      <div class="grid-4">
+        <div>
+          <label class="card-sub" style="font-size:10px;font-weight:700;display:block;margin-bottom:2px;">Kcal *</label>
+          <input type="number" step="1" min="0" id="mfm-kcal" class="input-field" placeholder="0" />
+        </div>
+        <div>
+          <label class="card-sub" style="font-size:10px;font-weight:700;display:block;margin-bottom:2px;color:var(--blue);">Prot (g)</label>
+          <input type="number" step="0.1" min="0" id="mfm-p" class="input-field" placeholder="0" />
+        </div>
+        <div>
+          <label class="card-sub" style="font-size:10px;font-weight:700;display:block;margin-bottom:2px;color:var(--cyan);">Carbs (g)</label>
+          <input type="number" step="0.1" min="0" id="mfm-c" class="input-field" placeholder="0" />
+        </div>
+        <div>
+          <label class="card-sub" style="font-size:10px;font-weight:700;display:block;margin-bottom:2px;color:var(--amber);">Grasas (g)</label>
+          <input type="number" step="0.1" min="0" id="mfm-f" class="input-field" placeholder="0" />
+        </div>
+      </div>
+      <button type="button" class="btn-pill-green" style="width:100%;" data-action="commit-manual-food">Sumar al Día ✓</button>
+    </div>
+
+    <!-- Configurador / Editor de Combo o Plato Guardado -->
+    <div id="mf-combo-editor" class="soft-box" style="display:none;flex-direction:column;gap:8px;border:1.5px solid var(--ink);background:#fff;">
+      <div class="row-between">
+        <div>
+          <span class="badge badge-coral" style="font-size:10px;" id="mfc-badge">1 Plato / Combo</span>
+          <input type="text" id="mfc-name" class="input-field" style="margin-top:4px;padding:6px 10px;font-weight:800;" placeholder="Nombre del plato (ej. Bowl Desayuno)" />
+        </div>
+        <button type="button" class="btn-pill-soft" data-action="close-combo-editor">✕</button>
+      </div>
+
+      <div class="grid-2" id="mfc-servings-row">
+        <div class="soft-box" style="padding:7px 10px;">
+          <span class="card-sub" style="font-size:10px;font-weight:700;display:block;">Raciones / Platos</span>
+          <div class="grid-4" style="margin-top:4px;">
+            <button type="button" class="btn-pill-soft" style="padding:4px 2px;" data-action="set-combo-mult" data-val="0.5">0.5</button>
+            <button type="button" class="btn-pill-dark" style="padding:4px 2px;" data-action="set-combo-mult" data-val="1">1 pl</button>
+            <button type="button" class="btn-pill-soft" style="padding:4px 2px;" data-action="set-combo-mult" data-val="1.5">1.5</button>
+            <button type="button" class="btn-pill-soft" style="padding:4px 2px;" data-action="set-combo-mult" data-val="2">2 pl</button>
+          </div>
+        </div>
+        <div class="soft-box" style="padding:7px 10px;">
+          <span class="card-sub" style="font-size:10px;font-weight:700;display:block;">Bloque habitual</span>
+          <select id="mfc-cat" class="select-field" style="margin-top:4px;padding:5px 8px;background:#fff;">
+            <option value="Desayuno">Desayuno</option>
+            <option value="Comida">Comida</option>
+            <option value="Snack">Snack</option>
+            <option value="Cena">Cena</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <span style="font-size:11px;font-weight:800;display:block;margin-bottom:4px;">Ingredientes en este plato (modifica gramos/ml exactos):</span>
+        <div id="mfc-ing-list" style="display:flex;flex-direction:column;gap:5px;max-height:140px;overflow-y:auto;"></div>
+      </div>
+
+      <div class="soft-box" style="padding:10px;display:flex;flex-direction:column;gap:7px;">
+        <div class="row-between">
+          <span style="font-size:11px;font-weight:800;">Añadir varios ingredientes a la vez:</span>
+          <button type="button" class="btn-pill-dark" id="mfc-bulk-add-btn" style="padding:5px 11px;font-size:11px;" data-action="mfc-bulk-add">+ Añadir seleccionados</button>
+        </div>
+        <input type="text" id="mfc-food-filter" class="input-field" style="min-height:36px;padding:6px 10px;font-size:12.5px;background:#fff;" placeholder="Filtrar alimentos (pollo, huevo, cottage, clara...)" />
+        <div id="mfc-multi-picker" style="display:flex;flex-direction:column;gap:4px;max-height:145px;overflow-y:auto;"></div>
+      </div>
+
+      <div style="background:var(--ink);color:#fff;border-radius:14px;padding:9px 12px;display:flex;align-items:center;justify-content:space-between;font-size:12px;">
+        <div>
+          <span style="font-size:10px;opacity:0.75;display:block;" id="mfc-tot-label">Total 1 plato</span>
+          <strong id="mfc-tot-kcal" style="font-size:14px;">0 kcal</strong>
+        </div>
+        <div style="display:flex;gap:8px;font-weight:700;">
+          <span>P: <strong id="mfc-tot-p" style="color:#60A5FA;">0g</strong></span>
+          <span>C: <strong id="mfc-tot-c" style="color:#22D3EE;">0g</strong></span>
+          <span>G: <strong id="mfc-tot-f" style="color:#FBBF24;">0g</strong></span>
+        </div>
+      </div>
+
+      <div class="grid-2" id="mfc-actions-row">
+        <button type="button" class="btn-pill-soft" data-action="save-combo-library">Guardar Cambios ★</button>
+        <button type="button" class="btn-pill-green" data-action="commit-combo-day">Añadir al Día ✓</button>
+      </div>
+    </div>
+
+    <!-- Plato Multi-Ingrediente -->
+    <div id="mf-basket-box" class="soft-box" style="display:none;flex-direction:column;gap:6px;background:#EFECE6;">
+      <div class="row-between">
+        <span style="font-size:11px;font-weight:800;" id="mfb-title">Plato en curso</span>
+        <span style="font-size:11px;font-weight:800;color:var(--green);" id="mfb-totals">0 kcal</span>
+      </div>
+      <div id="mfb-list" style="display:flex;flex-direction:column;gap:4px;max-height:90px;overflow-y:auto;"></div>
+      <div class="grid-2">
+        <button type="button" class="btn-pill-soft" style="background:#fff;" data-action="save-basket-combo">Guardar Combo ★</button>
+        <button type="button" class="btn-pill-dark" data-action="commit-basket">Añadir Todo ✓</button>
+      </div>
+    </div>
+
+    <!-- Listado de Alimentos / Combos -->
+    <div id="mf-list" style="display:flex;flex-direction:column;gap:6px;max-height:220px;overflow-y:auto;"></div>
+
+    <!-- Alta Rápida de Alimento Nuevo (Base 100g / 100ml) -->
+    <details class="soft-box">
+      <summary style="font-size:12px;font-weight:800;cursor:pointer;">+ Crear nuevo alimento (base 100g / 100ml)</summary>
+      <form id="form-new-food-modal" style="display:flex;flex-direction:column;gap:7px;margin-top:8px;">
+        <input type="text" id="fnf-name" class="input-field" style="background:#fff;" placeholder="Nombre (ej. Pechuga pavo, Aguacate)" required />
+        <div class="grid-3">
+          <select id="fnf-cat" class="select-field" style="background:#fff;">
+            <option value="Desayuno">Desayuno</option>
+            <option value="Comida">Comida</option>
+            <option value="Snack">Snack</option>
+            <option value="Cena">Cena</option>
+          </select>
+          <select id="fnf-liquid" class="select-field" style="background:#fff;">
+            <option value="g">Por 100 g</option>
+            <option value="ml">Por 100 ml</option>
+          </select>
+          <input type="number" step="1" id="fnf-unit-g" class="input-field" style="background:#fff;" placeholder="g/ud (opc)" />
+        </div>
+        <div class="grid-4">
+          <input type="number" step="0.1" id="fnf-kcal" class="input-field" style="background:#fff;" placeholder="Kcal/100" required />
+          <input type="number" step="0.1" id="fnf-p" class="input-field" style="background:#fff;" placeholder="Prot/100" required />
+          <input type="number" step="0.1" id="fnf-c" class="input-field" style="background:#fff;" placeholder="Carb/100" required />
+          <input type="number" step="0.1" id="fnf-f" class="input-field" style="background:#fff;" placeholder="Grasa/100" required />
+        </div>
+        <button type="submit" class="btn-pill-dark" style="width:100%;">Guardar en Base de Datos ✓</button>
+      </form>
+    </details>
+  </div>
+</div>
+
+<!-- MODAL: NUEVA FASE / EXTENDER PLAN -->
+<div class="modal-backdrop" id="modal-phase">
+  <div class="modal-box">
+    <div class="row-between">
+      <div>
+        <h3 class="card-title" style="font-size:16px;">Nueva Fase / Extender Plan</h3>
+        <p class="card-sub">Consolida tu pérdida en mantenimiento o abre un nuevo ciclo</p>
+      </div>
+      <button type="button" class="btn-pill-soft" data-action="close-modal" data-target="modal-phase">✕</button>
+    </div>
+
+    <form id="form-phase" style="display:flex;flex-direction:column;gap:10px;">
+      <div>
+        <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">Tipo de fase</label>
+        <select id="fp-type" class="select-field">
+          <option value="maintenance">Fase de Mantenimiento (consolidar pérdida)</option>
+          <option value="fatloss">Nueva Meta de Pérdida de Grasa</option>
+        </select>
+      </div>
+      <div>
+        <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">Nombre de la fase</label>
+        <input type="text" id="fp-name" class="input-field" required />
+      </div>
+      <div class="grid-2">
+        <div>
+          <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">Fecha inicio</label>
+          <input type="date" id="fp-start" class="input-field" required />
+        </div>
+        <div>
+          <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">Duración (semanas)</label>
+          <select id="fp-weeks" class="select-field">
+            <option value="4" selected>4 semanas (28 días)</option>
+            <option value="5">5 semanas (35 días)</option>
+            <option value="6">6 semanas (42 días)</option>
+            <option value="8">8 semanas (56 días)</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">Peso inicial (kg)</label>
+          <input type="number" step="0.1" id="fp-weight" class="input-field" required />
+        </div>
+        <div>
+          <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">% Grasa inicial</label>
+          <input type="number" step="0.1" id="fp-bf" class="input-field" required />
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">Meta pérdida grasa (kg)</label>
+          <input type="number" step="0.1" id="fp-loss" value="0.0" class="input-field" />
+        </div>
+        <div>
+          <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">Calorías máx/día</label>
+          <input type="number" step="25" id="fp-cal" value="2050" class="input-field" required />
+        </div>
+      </div>
+      <div class="grid-3">
+        <div>
+          <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">Prot mín (g)</label>
+          <input type="number" id="fp-prot" value="130" class="input-field" />
+        </div>
+        <div>
+          <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">Carbs máx (g)</label>
+          <input type="number" id="fp-carb" value="175" class="input-field" />
+        </div>
+        <div>
+          <label class="card-sub" style="display:block;font-weight:700;margin-bottom:4px;">Grasas máx (g)</label>
+          <input type="number" id="fp-fat" value="65" class="input-field" />
+        </div>
+      </div>
+      <button type="submit" class="btn-pill-dark" style="width:100%;padding:12px;">Crear y Activar Fase ✓</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ==========================================================================
+     1. PERSISTENCIA SEGURA Y MIGRACIÓN AUTOMÁTICA (localStorage + Fallback)
+     ========================================================================== */
+  const STORAGE_KEY = 'loss_plan_master_db';
+  const LEGACY_KEYS = ['loss_plan_5w_v7', 'loss_plan_5w_v6', 'loss_plan_5w_v5', 'loss_plan_5w_v4'];
+  const memStore = {};
+
+  function getStored(key) {
+    try {
+      return window.localStorage.getItem(key);
+    } catch (e) {
+      return Object.prototype.hasOwnProperty.call(memStore, key) ? memStore[key] : null;
+    }
+  }
+
+  function setStored(key, val) {
+    try {
+      window.localStorage.setItem(key, val);
+    } catch (e) {
+      memStore[key] = val;
+    }
+  }
+
+  /* ==========================================================================
+     2. BASE DE DATOS DE ALIMENTOS (POR 100g / 100ml + UNIDADES EQUIVALENTES)
+     ========================================================================== */
+  const MEAL_BLOCKS = ['Desayuno', 'Comida', 'Snack', 'Cena'];
+
+  const DEFAULT_FOODS = [
+    // Combos / Platos preestablecidos (1 plato = lista de ingredientes con gramos exactos)
+    {
+      id: 'c_des_1', isPreset: true, cat: 'Desayuno',
+      name: 'Pan proteico (2 reb) + 2 huevos + 50g jamón pollo',
+      aliases: ['combo desayuno proteico', 'pan proteico con huevos'],
+      unitName: 'plato',
+      ingredients: [
+        { foodId: 'f_22', grams: 70 },
+        { foodId: 'f_01', grams: 120 },
+        { foodId: 'f_06', grams: 50 }
+      ]
+    },
+    {
+      id: 'c_des_2', isPreset: true, cat: 'Desayuno',
+      name: 'Revuelto 200ml claras + 1 huevo + 2 tostadas maíz',
+      aliases: ['revuelto desayuno'],
+      unitName: 'plato',
+      ingredients: [
+        { foodId: 'f_02', grams: 200 },
+        { foodId: 'f_01', grams: 60 },
+        { foodId: 'f_24', grams: 15 }
+      ]
+    },
+    {
+      id: 'c_com_1', isPreset: true, cat: 'Comida',
+      name: '150g pollo tiras + bol 350g crema calabaza',
+      aliases: ['pollo con crema de calabaza'],
+      unitName: 'plato',
+      ingredients: [
+        { foodId: 'f_07', grams: 150 },
+        { foodId: 'f_20', grams: 350 }
+      ]
+    },
+    {
+      id: 'c_com_2', isPreset: true, cat: 'Comida',
+      name: 'Bol 350g crema lentejas + 100g pollo tiras',
+      aliases: ['crema lentejas con pollo'],
+      unitName: 'plato',
+      ingredients: [
+        { foodId: 'f_19', grams: 350 },
+        { foodId: 'f_07', grams: 100 }
+      ]
+    },
+    {
+      id: 'c_snk_1', isPreset: true, cat: 'Snack',
+      name: 'Yogurt griego proteínas + 5g cacao puro',
+      aliases: ['yogurt con cacao'],
+      unitName: 'plato',
+      ingredients: [
+        { foodId: 'f_32', grams: 125 },
+        { foodId: 'f_17', grams: 5 }
+      ]
+    },
+    {
+      id: 'c_snk_2', isPreset: true, cat: 'Snack',
+      name: '100g queso cottage + 1 lata piña escurrida',
+      aliases: ['cottage con piña'],
+      unitName: 'plato',
+      ingredients: [
+        { foodId: 'f_16', grams: 100 },
+        { foodId: 'f_04', grams: 140 }
+      ]
+    },
+    {
+      id: 'c_cen_1', isPreset: true, cat: 'Cena',
+      name: 'Revuelto 200ml claras + 100g cottage + 1 lata atún',
+      aliases: ['cena proteica ligera'],
+      unitName: 'plato',
+      ingredients: [
+        { foodId: 'f_02', grams: 200 },
+        { foodId: 'f_16', grams: 100 },
+        { foodId: 'f_09', grams: 60 }
+      ]
+    },
+    {
+      id: 'c_cen_2', isPreset: true, cat: 'Cena',
+      name: '1 lata caballa + 30g queso feta + 100g remolacha',
+      aliases: ['ensalada caballa feta'],
+      unitName: 'plato',
+      ingredients: [
+        { foodId: 'f_10', grams: 85 },
+        { foodId: 'f_18', grams: 30 },
+        { foodId: 'f_11', grams: 100 }
+      ]
+    },
+
+    // 37 Alimentos exactos estandarizados por 100g / 100ml
+    { id: 'f_01', isPreset: false, cat: 'Desayuno', name: 'Huevo entero', aliases: ['huevo', 'huevos', 'huevo entero'], isLiquid: false, unitName: 'huevo', unitGrams: 60, kcal100: 133.3, p100: 11.7, c100: 0.7, f100: 9.5 },
+    { id: 'f_02', isPreset: false, cat: 'Desayuno', name: 'Claras Mercadona', aliases: ['claras', 'clara', 'claras mercadona', 'claras del mercadona'], isLiquid: true, unitName: 'clara', unitGrams: 33, kcal100: 42.0, p100: 11.0, c100: 0.4, f100: 0.2 },
+    { id: 'f_03', isPreset: false, cat: 'Comida', name: 'Tomate frito artesanal Mercadona', aliases: ['tomate frito', 'tomate artesanal', 'tomate mercadona'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 201.0, p100: 1.6, c100: 14.3, f100: 15.0 },
+    { id: 'f_04', isPreset: false, cat: 'Snack', name: 'Piña en lata escurrida', aliases: ['piña', 'pina', 'piña en lata', 'lata de piña'], isLiquid: false, unitName: 'lata', unitGrams: 140, kcal100: 47.1, p100: 0.4, c100: 11.4, f100: 0.0 },
+    { id: 'f_05', isPreset: false, cat: 'Comida', name: 'Salsa albahaca Mercadona', aliases: ['salsa albahaca', 'albahaca mercadona', 'albahaca'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 34.0, p100: 1.1, c100: 5.8, f100: 0.2 },
+    { id: 'f_06', isPreset: false, cat: 'Desayuno', name: 'Jamón 98% pollo La Carloteña', aliases: ['jamon pollo', 'jamón pollo', 'jamon 98', 'jamón 98', 'carloteña', 'jamon de pollo'], isLiquid: false, unitName: 'loncha', unitGrams: 25, kcal100: 125.0, p100: 26.8, c100: 0.3, f100: 2.0 },
+    { id: 'f_07', isPreset: false, cat: 'Comida', name: 'Pollo tiras al horno', aliases: ['pollo tiras', 'tiras de pollo', 'pollo al horno', 'pollo'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 107.0, p100: 23.4, c100: 0.6, f100: 1.2 },
+    { id: 'f_08', isPreset: false, cat: 'Comida', name: 'Chorizo picante', aliases: ['chorizo', 'chorizo picante'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 356.0, p100: 21.0, c100: 2.7, f100: 29.0 },
+    { id: 'f_09', isPreset: false, cat: 'Cena', name: 'Atún claro en agua', aliases: ['atun', 'atún', 'atun en agua', 'atún en agua', 'lata de atun', 'lata de atún'], isLiquid: false, unitName: 'lata', unitGrams: 60, kcal100: 98.0, p100: 21.0, c100: 0.9, f100: 1.2 },
+    { id: 'f_10', isPreset: false, cat: 'Cena', name: 'Caballa en aceite de oliva', aliases: ['caballa', 'caballa en aceite', 'lata de caballa'], isLiquid: false, unitName: 'lata', unitGrams: 85, kcal100: 202.4, p100: 23.5, c100: 0.3, f100: 11.1 },
+    { id: 'f_11', isPreset: false, cat: 'Cena', name: 'Remolacha', aliases: ['remolacha'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 35.0, p100: 1.8, c100: 6.4, f100: 0.2 },
+    { id: 'f_12', isPreset: false, cat: 'Comida', name: 'Zanahoria conserva', aliases: ['zanahoria', 'zanahoria conserva'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 39.0, p100: 0.6, c100: 7.8, f100: 0.2 },
+    { id: 'f_13', isPreset: false, cat: 'Snack', name: 'Fresas congeladas', aliases: ['fresas', 'fresas congeladas'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 32.0, p100: 0.7, c100: 7.7, f100: 0.3 },
+    { id: 'f_14', isPreset: false, cat: 'Snack', name: 'Arándanos congelados', aliases: ['arandanos', 'arándanos', 'arandanos congelados'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 57.0, p100: 0.7, c100: 14.5, f100: 0.3 },
+    { id: 'f_15', isPreset: false, cat: 'Snack', name: 'Mango fresco', aliases: ['mango', 'mango fresco'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 60.0, p100: 0.8, c100: 15.0, f100: 0.4 },
+    { id: 'f_16', isPreset: false, cat: 'Cena', name: 'Queso cottage', aliases: ['queso cottage', 'cottage'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 93.0, p100: 13.0, c100: 1.6, f100: 4.0 },
+    { id: 'f_17', isPreset: false, cat: 'Snack', name: 'Cacao puro en polvo', aliases: ['cacao', 'cacao puro', 'cacao en polvo'], isLiquid: false, unitName: 'cda', unitGrams: 5, kcal100: 375.0, p100: 25.5, c100: 16.3, f100: 16.0 },
+    { id: 'f_18', isPreset: false, cat: 'Cena', name: 'Queso feta', aliases: ['queso feta', 'feta'], isLiquid: false, unitName: 'porción 30g', unitGrams: 30, kcal100: 277.0, p100: 16.0, c100: 1.0, f100: 23.2 },
+    { id: 'f_19', isPreset: false, cat: 'Comida', name: 'Crema de lentejas', aliases: ['crema de lentejas', 'crema lentejas'], isLiquid: false, unitName: 'bol 350g', unitGrams: 350, kcal100: 70.0, p100: 4.6, c100: 6.0, f100: 2.2 },
+    { id: 'f_20', isPreset: false, cat: 'Comida', name: 'Crema de calabaza', aliases: ['crema de calabaza', 'crema calabaza'], isLiquid: false, unitName: 'bol 350g', unitGrams: 350, kcal100: 48.3, p100: 0.9, c100: 4.3, f100: 2.8 },
+    { id: 'f_21', isPreset: false, cat: 'Comida', name: 'Mayonesa Ligeresa', aliases: ['mayonesa', 'ligeresa', 'mayonesa ligeresa'], isLiquid: true, unitName: 'cda', unitGrams: 15, kcal100: 177.0, p100: 0.3, c100: 7.4, f100: 16.0 },
+    { id: 'f_22', isPreset: false, cat: 'Desayuno', name: 'Pan de molde alto en proteínas Dia', aliases: ['pan proteico', 'pan de molde', 'pan dia', 'pan alto en proteinas'], isLiquid: false, unitName: 'rebanada', unitGrams: 35, kcal100: 267.0, p100: 20.1, c100: 22.4, f100: 9.2 },
+    { id: 'f_23', isPreset: false, cat: 'Desayuno', name: 'Bebida Leche de Soja 0% Azúcar', aliases: ['leche de soja', 'bebida de soja', 'leche soja'], isLiquid: true, unitName: 'vaso 250ml', unitGrams: 250, kcal100: 29.0, p100: 2.7, c100: 1.2, f100: 1.5 },
+    { id: 'f_24', isPreset: false, cat: 'Desayuno', name: 'Tostadas de maíz', aliases: ['tostadas de maiz', 'tostadas de maíz', 'tostadas maiz', 'tostada de maiz', 'tostada maiz'], isLiquid: false, unitName: 'tostada', unitGrams: 7.5, kcal100: 366.7, p100: 7.7, c100: 80.0, f100: 1.7 },
+    { id: 'f_25', isPreset: false, cat: 'Snack', name: 'Tostadas de legumbres', aliases: ['tostadas legumbres', 'tostadas de legumbres', 'tostada legumbres'], isLiquid: false, unitName: 'tostada', unitGrams: 6.8, kcal100: 366.3, p100: 24.9, c100: 54.9, f100: 3.3 },
+    { id: 'f_26', isPreset: false, cat: 'Snack', name: 'Nueces peladas', aliases: ['nueces', 'nueces peladas', 'nuez'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 709.0, p100: 18.0, c100: 2.9, f100: 68.0 },
+    { id: 'f_27', isPreset: false, cat: 'Snack', name: 'Pepinillos agridulces', aliases: ['pepinillos', 'pepinillos agridulces'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 56.0, p100: 0.9, c100: 11.0, f100: 0.5 },
+    { id: 'f_28', isPreset: false, cat: 'Comida', name: 'Cebolla frita', aliases: ['cebolla frita', 'cebolla crujiente'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 590.0, p100: 6.0, c100: 40.0, f100: 44.0 },
+    { id: 'f_29', isPreset: false, cat: 'Cena', name: 'Pimientos del piquillo', aliases: ['pimientos', 'pimientos del piquillo', 'piquillo'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 40.0, p100: 1.0, c100: 7.7, f100: 0.4 },
+    { id: 'f_30', isPreset: false, cat: 'Comida', name: 'Pesto', aliases: ['pesto', 'salsa pesto'], isLiquid: false, unitName: 'cdta', unitGrams: 10, kcal100: 570.0, p100: 5.9, c100: 7.7, f100: 57.0 },
+    { id: 'f_31', isPreset: false, cat: 'Snack', name: 'Yogurt soja', aliases: ['yogurt soja', 'yogur soja', 'yogurt de soja'], isLiquid: false, unitName: 'unidad', unitGrams: 100, kcal100: 40.0, p100: 4.0, c100: 2.0, f100: 1.5 },
+    { id: 'f_32', isPreset: false, cat: 'Snack', name: 'Yogurt griego + proteínas', aliases: ['yogurt griego', 'yogur griego', 'yogurt proteinas', 'yogurt griego + proteínas'], isLiquid: false, unitName: 'unidad', unitGrams: 125, kcal100: 48.0, p100: 9.6, c100: 3.0, f100: 0.5 },
+    { id: 'f_33', isPreset: false, cat: 'Desayuno', name: 'Kéfir', aliases: ['kefir', 'kéfir'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 74.0, p100: 3.9, c100: 5.1, f100: 4.2 },
+    { id: 'f_34', isPreset: false, cat: 'Desayuno', name: 'Semillas de chía', aliases: ['chia', 'chía', 'semillas chia', 'semillas de chia'], isLiquid: false, unitName: 'cda', unitGrams: 12, kcal100: 464.0, p100: 22.0, c100: 2.6, f100: 34.0 },
+    { id: 'f_35', isPreset: false, cat: 'Comida', name: 'Calabaza cruda', aliases: ['calabaza', 'calabaza cruda'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 26.0, p100: 1.0, c100: 6.5, f100: 0.1 },
+    { id: 'f_36', isPreset: false, cat: 'Desayuno', name: 'Mermelada sin azúcar fresa', aliases: ['mermelada', 'mermelada fresa', 'mermelada sin azucar'], isLiquid: false, unitName: 'cdta', unitGrams: 15, kcal100: 28.0, p100: 0.6, c100: 14.8, f100: 0.0 },
+    { id: 'f_37', isPreset: false, cat: 'Comida', name: 'Pulled Pork', aliases: ['pulled pork', 'cerdo desmechado'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 194.0, p100: 21.0, c100: 6.3, f100: 10.0 },
+    { id: 'f_38', isPreset: false, cat: 'Comida', name: 'Salsa de soja', aliases: ['salsa soja', 'salsa de soja', 'soja'], isLiquid: true, unitName: 'cda', unitGrams: 15, kcal100: 53.0, p100: 8.1, c100: 4.9, f100: 0.1 },
+    { id: 'f_39', isPreset: false, cat: 'Desayuno', name: 'Colágeno Chocolate Vital Proteins', aliases: ['colageno', 'colágeno', 'colageno chocolate', 'vital proteins', 'colágeno chocolate'], isLiquid: false, excludeProteinFromGoal: true, unitName: 'cazo DDR (27g)', unitGrams: 27, kcal100: 363.0, p100: 70.4, c100: 14.8, f100: 2.2 },
+    { id: 'f_40', isPreset: false, cat: 'Snack', name: 'Frambuesas congeladas', aliases: ['frambuesas', 'frambuesas congeladas', 'frambuesa'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 52.0, p100: 1.2, c100: 11.9, f100: 0.7 },
+    { id: 'f_41', isPreset: false, cat: 'Cena', name: 'Lechuga', aliases: ['lechuga', 'ensalada lechuga'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 15.0, p100: 1.4, c100: 2.9, f100: 0.2 },
+    { id: 'f_42', isPreset: false, cat: 'Cena', name: 'Pepino', aliases: ['pepino'], isLiquid: false, unitName: null, unitGrams: null, kcal100: 15.0, p100: 0.7, c100: 3.6, f100: 0.1 }
+  ];
+
+  const ROADMAP_5W = [
+    { week: 0, title: 'Inicio · Lun 16 Nov', lossMin: 0.0, lossMax: 0.0, deficit: '0 kcal', note: 'Peso base 70,4 kg · 27,6% grasa (19,43 kg grasa / 50,97 kg magra).' },
+    { week: 1, title: 'Semana 1 (16 – 22 Nov)', lossMin: 0.5, lossMax: 0.7, deficit: '~5.500 kcal', note: 'Bajada inicial por pérdida de líquido y glucógeno. Desinflamación facial y digestiva.' },
+    { week: 2, title: 'Semana 2 (23 – 29 Nov)', lossMin: 1.0, lossMax: 1.4, deficit: '~11.000 kcal', note: 'Estabilización del ritmo de pérdida. Abdomen más plano al despertar.' },
+    { week: 3, title: 'Semana 3 (30 Nov – 6 Dic)', lossMin: 1.5, lossMax: 2.1, deficit: '~16.500 kcal', note: 'Punto de inflexión visual: ropa más suelta en cintura y mayor ligereza en dominadas.' },
+    { week: 4, title: 'Semana 4 (7 – 13 Dic)', lossMin: 2.0, lossMax: 2.8, deficit: '~22.000 kcal', note: 'Mayor definición en hombros, brazos y espalda. Aumento de repeticiones en dominadas.' },
+    { week: 5, title: 'Semana 5 · Cierre (14 – 21 Dic)', lossMin: 2.5, lossMax: 3.5, deficit: '~27.500 kcal', note: 'Meta final: reducción de talla, tono abdominal visible y fuerza relativa mejorada.' }
+  ];
+
+  /* ==========================================================================
+     3. ESTADO GLOBAL Y UTILIDADES DE FECHA
+     ========================================================================== */
+  function parseYMD(ymd) {
+    const parts = String(ymd).split('-').map(Number);
+    return new Date(parts[0], (parts[1] || 1) - 1, parts[2] || 1);
+  }
+
+  function formatYMD(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  function createDefaultState() {
+    return {
+      activeTab: 'hoy',
+      activePhaseId: 'phase_1',
+      selectedDate: '2026-11-17',
+      phases: [
+        {
+          id: 'phase_1',
+          type: 'fatloss',
+          name: 'Fase 1: Plan 5 Semanas (16 Nov–21 Dic)',
+          startDate: '2026-11-16',
+          weeks: 5,
+          baseWeight: 70.4,
+          baseBodyFat: 27.6,
+          baseFatMassKg: 19.43,
+          baseLeanMassKg: 50.97,
+          targetWeight: 65.0,
+          targetWeightLossKg: 5.0,
+          targetFatLossKg: 3.5,
+          bmrKcal: 1470,
+          baseWorkTdee: 1850,
+          targetDeficit: 800,
+          calMin: 1050,
+          calMax: 1550,
+          protMin: 135,
+          protMax: 145,
+          carbMin: 90,
+          carbMax: 110,
+          fatMin: 45,
+          fatMax: 50,
+          stepsGoal: 8000,
+          weeklyRecords: [
+            { week: 0, date: '2026-11-16', weight: 70.4, bodyFat: 27.6, fatMassKg: 19.43, leanMassKg: 50.97, waist: '', pullups: '' }
+          ]
+        }
+      ],
+      days: {},
+      foods: JSON.parse(JSON.stringify(DEFAULT_FOODS)),
+      chatMessages: [
+        {
+          id: 'welcome_1',
+          sender: 'bot',
+          text: 'Lista para tu plan. Base: 70,4 kg · 27,6% grasa · Déficit objetivo: 800 kcal/día · Macros fijos: mín 135g P, máx 110g C, máx 50g G.\n\nEscribe o dicta por voz lo que comes (ej: "1 cazo de colágeno chocolate y 2 huevos") o usa "+ Manual" en cada bloque.'
+        }
+      ]
+    };
+  }
+
+  function loadState() {
+    let raw = getStored(STORAGE_KEY);
+    if (!raw) {
+      for (const k of LEGACY_KEYS) {
+        const legacy = getStored(k);
+        if (legacy) { raw = legacy; break; }
+      }
+    }
+    if (!raw) return createDefaultState();
+    try {
+      const parsed = JSON.parse(raw);
+      const def = createDefaultState();
+      if (!Array.isArray(parsed.phases) || parsed.phases.length === 0) parsed.phases = def.phases;
+      parsed.phases.forEach(p => {
+        if (!p.bmrKcal) p.bmrKcal = 1470;
+        if (!p.baseWorkTdee) p.baseWorkTdee = 1850;
+        if (p.targetDeficit == null) p.targetDeficit = 800;
+        if (!p.targetWeight) p.targetWeight = 65.0;
+        if (!p.targetWeightLossKg) p.targetWeightLossKg = 5.0;
+        if (!p.targetFatLossKg || Number(p.targetFatLossKg) === 3.0) p.targetFatLossKg = 3.5;
+        p.protMin = 135;
+        p.carbMax = 110;
+        p.fatMax = 50;
+      });
+      if (!Array.isArray(parsed.foods) || parsed.foods.length === 0) {
+        parsed.foods = def.foods;
+      } else {
+        const existingIds = new Set(parsed.foods.map(f => f.id));
+        DEFAULT_FOODS.forEach(df => {
+          if (!existingIds.has(df.id)) parsed.foods.push(df);
+        });
+        parsed.foods.forEach(f => {
+          if (f.id === 'f_39' || /col[aá]geno|vital\s*proteins/i.test(f.name || '')) {
+            f.excludeProteinFromGoal = true;
+          }
+        });
+      }
+      if (!parsed.days || typeof parsed.days !== 'object') parsed.days = {};
+      if (!Array.isArray(parsed.chatMessages)) parsed.chatMessages = def.chatMessages;
+      const merged = Object.assign(def, parsed);
+      setStored(STORAGE_KEY, JSON.stringify(merged));
+      return merged;
+    } catch (e) {
+      return createDefaultState();
+    }
+  }
+
+  let state = loadState();
+
+  function saveState() {
+    setStored(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function showToast(msg) {
+    const el = document.getElementById('toast');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove('show'), 2400);
+  }
+
+  function escapeHtml(str) {
+    return String(str == null ? '' : str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  /* ==========================================================================
+     4. CÁLCULOS DE PLAN, DÍAS Y MACROS
+     ========================================================================== */
+  function getActivePhase() {
+    return state.phases.find(p => p.id === state.activePhaseId) || state.phases[0];
+  }
+
+  function getPhaseCalendar(phase) {
+    const start = parseYMD(phase.startDate || '2026-11-16');
+    const totalDays = (Number(phase.weeks) || 5) * 7;
+    const letters = ['D', 'L', 'M', 'X', 'J', 'V', 'S'];
+    const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    const out = [];
+    for (let i = 0; i < totalDays; i++) {
+      const d = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
+      out.push({
+        dateStr: formatYMD(d),
+        week: Math.floor(i / 7) + 1,
+        dayNum: d.getDate(),
+        dayLetter: letters[d.getDay()],
+        shortLabel: `${d.getDate()} ${months[d.getMonth()]}`
+      });
+    }
+    return out;
+  }
+
+  function getPhaseTargets(phase) {
+    const w = Number(phase.baseWeight) || 70.4;
+    const bf = Number(phase.baseBodyFat) || 27.6;
+    const fatKg = phase.baseFatMassKg != null ? Number(phase.baseFatMassKg) : +(w * bf / 100).toFixed(2);
+    const leanKg = phase.baseLeanMassKg != null ? Number(phase.baseLeanMassKg) : +(w - fatKg).toFixed(2);
+    const bmrKcal = Number(phase.bmrKcal) || 1470;
+    const baseTdee = Number(phase.baseWorkTdee) || 1850;
+    const targetDeficit = Number(phase.targetDeficit) || 800;
+
+    return {
+      baseWeight: w,
+      baseBodyFat: bf,
+      fatMassKg: fatKg,
+      leanMassKg: leanKg,
+      bmrKcal,
+      baseTdee,
+      targetDeficit,
+      calMin: Number(phase.calMin) || 1050,
+      calMax: Number(phase.calMax) || 1550,
+      protMin: Number(phase.protMin) || 135,
+      protMax: Math.max((Number(phase.protMax) || 145), (Number(phase.protMin) || 135) + 10),
+      carbMin: Number(phase.carbMin) || 90,
+      carbMax: Number(phase.carbMax) || 110,
+      fatMin: Number(phase.fatMin) || 45,
+      fatMax: Number(phase.fatMax) || 50,
+      stepsGoal: Number(phase.stepsGoal) || 8000
+    };
+  }
+
+  function getLatestPhaseMetrics(phase) {
+    const sorted = [...(phase.weeklyRecords || [])].sort((a, b) => Number(a.week) - Number(b.week));
+    const last = sorted[sorted.length - 1] || {
+      week: 0,
+      weight: phase.baseWeight,
+      bodyFat: phase.baseBodyFat,
+      fatMassKg: phase.baseFatMassKg,
+      leanMassKg: phase.baseLeanMassKg
+    };
+    const w = Number(last.weight) || Number(phase.baseWeight);
+    const bf = last.bodyFat != null && last.bodyFat !== '' ? Number(last.bodyFat) : Number(phase.baseBodyFat);
+    const fatKg = last.fatMassKg != null && last.fatMassKg !== '' ? Number(last.fatMassKg) : +(w * bf / 100).toFixed(2);
+    const leanKg = last.leanMassKg != null && last.leanMassKg !== '' ? Number(last.leanMassKg) : +(w - fatKg).toFixed(2);
+    return { weight: w, bodyFat: bf, fatMassKg: fatKg, leanMassKg: leanKg, sorted };
+  }
+
+  function getWorkoutKcal(rec) {
+    if (!rec || !rec.workout) return 0;
+    const wt = String(rec.workoutType || '');
+    if (wt.includes('Calistenia + Pesas')) return 470;
+    if (wt.includes('Pesas')) return 220;
+    return 250; // Calistenia por defecto
+  }
+
+  function ensureDay(dateStr) {
+    if (!state.days || typeof state.days !== 'object') state.days = {};
+    if (!state.days[dateStr]) {
+      state.days[dateStr] = {
+        meals: [],
+        steps: 0,
+        workout: false,
+        workoutType: 'Calistenia (+250 kcal)',
+        creatine: false,
+        water: 0,
+        statusOverride: null
+      };
+    }
+    if (!Array.isArray(state.days[dateStr].meals)) {
+      state.days[dateStr].meals = [];
+    }
+    return state.days[dateStr];
+  }
+
+  function getDaySummary(dateStr, phaseObj) {
+    const phase = phaseObj || getActivePhase();
+    const rec = ensureDay(dateStr);
+    const t = getPhaseTargets(phase);
+    const sums = rec.meals.reduce((acc, m) => ({
+      kcal: acc.kcal + (Number(m.kcal) || 0),
+      p: acc.p + (Number(m.p) || 0),
+      c: acc.c + (Number(m.c) || 0),
+      f: acc.f + (Number(m.f) || 0)
+    }), { kcal: 0, p: 0, c: 0, f: 0 });
+
+    const stepsCount = Number(rec.steps) || 0;
+    const stepsOk = stepsCount >= t.stepsGoal;
+    const stepsKcal = Math.round(stepsCount * 0.025);
+    const workoutKcal = getWorkoutKcal(rec);
+    const totalBurn = t.baseTdee + stepsKcal + workoutKcal;
+    const allowedKcal = Math.max(0, totalBurn - t.targetDeficit);
+    const deficit = sums.kcal > 0 ? Math.round(totalBurn - sums.kcal) : 0;
+    const lowProteinAlert = sums.kcal > 0 && sums.p < t.protMin;
+
+    let autoStatus = 'pending';
+    if (sums.kcal > 0) {
+      const calOk = sums.kcal <= allowedKcal;
+      const protOk = sums.p >= t.protMin;
+      if (calOk && protOk) autoStatus = 'pass';
+      else if (sums.kcal > allowedKcal + 80) autoStatus = 'fail';
+    }
+
+    return {
+      rec,
+      t,
+      kcal: Math.round(sums.kcal),
+      p: Math.round(sums.p * 10) / 10,
+      c: Math.round(sums.c * 10) / 10,
+      f: Math.round(sums.f * 10) / 10,
+      stepsOk,
+      stepsKcal,
+      workoutKcal,
+      totalBurn,
+      allowedKcal,
+      deficit,
+      lowProteinAlert,
+      autoStatus,
+      finalStatus: rec.statusOverride || autoStatus
+    };
+  }
+
+  function calcFoodMacros(food, grams) {
+    const factor = (Number(grams) || 0) / 100;
+    const isCollagen = Boolean(food.excludeProteinFromGoal) || food.id === 'f_39' || /col[aá]geno|vital\s*proteins/i.test(food.name || '');
+    const rawProt = Math.round((Number(food.p100) || 0) * factor * 10) / 10;
+    return {
+      kcal: Math.round((Number(food.kcal100) || 0) * factor),
+      p: isCollagen ? 0 : rawProt,
+      collagenProt: isCollagen ? rawProt : 0,
+      c: Math.round((Number(food.c100) || 0) * factor * 10) / 10,
+      f: Math.round((Number(food.f100) || 0) * factor * 10) / 10
+    };
+  }
+
+  function calcComboTotals(ingredients, multiplier) {
+    const mult = Number(multiplier) || 1;
+    let kcal = 0, p = 0, c = 0, f = 0, totalGrams = 0;
+    const details = [];
+    (ingredients || []).forEach(ing => {
+      const food = state.foods.find(x => x.id === ing.foodId);
+      if (!food) return;
+      const g = Math.round((Number(ing.grams) || 0) * mult * 10) / 10;
+      const u = food.isLiquid ? 'ml' : 'g';
+      const mac = calcFoodMacros(food, g);
+      kcal += mac.kcal;
+      p += mac.p;
+      c += mac.c;
+      f += mac.f;
+      totalGrams += g;
+      details.push(`${g}${u} ${food.name}`);
+    });
+    return {
+      kcal: Math.round(kcal),
+      p: Math.round(p * 10) / 10,
+      c: Math.round(c * 10) / 10,
+      f: Math.round(f * 10) / 10,
+      totalGrams: Math.round(totalGrams),
+      details
+    };
+  }
+
+  function getWeekComplianceStats(phase, cal, weekNum) {
+    const wDays = cal.filter(d => Number(d.week) === Number(weekNum));
+    let passCount = 0;
+    let failCount = 0;
+    wDays.forEach(d => {
+      const ds = getDaySummary(d.dateStr, phase);
+      if (ds.finalStatus === 'pass') passCount++;
+      else if (ds.finalStatus === 'fail') failCount++;
+    });
+    let weekStatus = 'pending';
+    if (failCount > 2) weekStatus = 'fail';
+    else if (passCount >= 5) weekStatus = 'pass';
+    return { passCount, failCount, weekStatus };
+  }
+
+  function renderApp() {
+    const phase = getActivePhase();
+
+    const phaseSel = document.getElementById('phase-select');
+    if (phaseSel) {
+      phaseSel.innerHTML = state.phases.map(p =>
+        `<option value="${escapeHtml(p.id)}" ${p.id === state.activePhaseId ? 'selected' : ''}>${escapeHtml(p.name)}</option>`
+      ).join('');
+    }
+
+    const titles = {
+      hoy: 'Check Diario',
+      chat: 'Chat y Voz Nutricional',
+      progreso: 'Progreso y Métricas',
+      objetivos: 'Objetivos y Alimentos'
+    };
+    const titleEl = document.getElementById('page-title');
+    if (titleEl) titleEl.textContent = titles[state.activeTab] || 'Check Diario';
+
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.nav === state.activeTab);
+    });
+
+    const vp = document.getElementById('main-viewport');
+    if (!vp) return;
+    if (state.activeTab === 'hoy') renderHoy(vp);
+    else if (state.activeTab === 'chat') renderChat(vp);
+    else if (state.activeTab === 'progreso') renderProgreso(vp);
+    else if (state.activeTab === 'objetivos') renderObjetivos(vp);
+  }
+  function buildBodyGoalMiniChartSvg(phase, sorted) {
+    const W = 340, H = 122, padX = 24, padY = 20;
+    const weeks = Number(phase.weeks) || 5;
+    const baseW = Number(phase.baseWeight) || 70.4;
+    const targetEndW = Number(phase.targetWeight) || 65.0;
+    const targetLoss = Math.max(0.5, baseW - targetEndW);
+    const minW = Math.min(targetEndW - 0.6, ...sorted.map(r => Number(r.weight) - 0.5));
+    const maxW = Math.max(baseW + 0.5, ...sorted.map(r => Number(r.weight) + 0.5));
+    const spanW = maxW - minW || 1;
+
+    const xOf = w => padX + (w / weeks) * (W - padX * 2);
+    const yOfW = val => H - padY - ((val - minW) / spanW) * (H - padY * 2);
+
+    const projPts = [];
+    for (let w = 0; w <= weeks; w++) {
+      projPts.push(`${xOf(w)},${yOfW(baseW - targetLoss * (w / weeks))}`);
+    }
+    const realPts = sorted.map(r => `${xOf(Number(r.week))},${yOfW(Number(r.weight))}`);
+
+    return `
+      <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:122px;overflow:visible;margin-top:8px;">
+        ${Array.from({ length: weeks + 1 }, (_, w) => `
+          <line x1="${xOf(w)}" y1="${padY}" x2="${xOf(w)}" y2="${H - padY}" stroke="#ECECE8" stroke-width="1" />
+          <text x="${xOf(w)}" y="${H - 3}" text-anchor="middle" font-size="10" font-weight="700" fill="#6C706D">${w === 0 ? 'Ini' : 'S' + w}</text>
+        `).join('')}
+        <polyline fill="none" stroke="#B5B9B6" stroke-width="2" stroke-dasharray="4 3" points="${projPts.join(' ')}" />
+        <polyline fill="none" stroke="#141414" stroke-width="2.6" stroke-linecap="round" points="${realPts.join(' ')}" />
+        ${sorted.map(r => {
+          const cx = xOf(Number(r.week));
+          const cy = yOfW(Number(r.weight));
+          const bfVal = r.bodyFat != null && r.bodyFat !== '' ? Number(r.bodyFat).toFixed(1) + '%' : '';
+          return `
+            <circle cx="${cx}" cy="${cy}" r="4.2" fill="#E05A47" stroke="#fff" stroke-width="1.5" />
+            <text x="${cx}" y="${cy - 8}" text-anchor="middle" font-size="9.5" font-weight="800" fill="#141414">${Number(r.weight).toFixed(1)}kg</text>
+            ${bfVal ? `<text x="${cx}" y="${cy + 14}" text-anchor="middle" font-size="9" font-weight="700" fill="#E05A47">${bfVal}</text>` : ''}
+          `;
+        }).join('')}
+      </svg>
+    `;
+  }
+
+  function buildCalorieArcGaugeSvg(kcal, calMax) {
+    const W = 320, H = 166, cx = 160, cy = 140, R = 96;
+    const safeMax = calMax > 0 ? calMax : 1050;
+    const consumed = Math.max(0, Number(kcal) || 0);
+    const rawPct = Math.round((consumed / safeMax) * 100);
+    const ratio = Math.max(0, Math.min(1, consumed / safeMax));
+    const isOver = consumed > safeMax;
+    const remaining = Math.max(0, safeMax - consumed);
+
+    const activeColor = isOver ? '#DC2626' : (rawPct >= 85 ? '#16A34A' : '#84CC16');
+    const trackColor = '#EAEDE8';
+
+    // Longitud exacta de la semicircunferencia (PI * R) para stroke-dasharray dinámico
+    const halfCircumference = +(Math.PI * R).toFixed(2);
+    const filledLength = +(halfCircumference * ratio).toFixed(2);
+
+    // Coordenadas del indicador circular sobre el arco (180° = izquierda, 0° = derecha)
+    const angleRad = Math.PI * (1 - ratio);
+    const dotX = +(cx + R * Math.cos(angleRad)).toFixed(2);
+    const dotY = +(cy - R * Math.sin(angleRad)).toFixed(2);
+
+    const xLeft = +(cx - R).toFixed(2);
+    const xRight = +(cx + R).toFixed(2);
+    const arcD = `M ${xLeft} ${cy} A ${R} ${R} 0 0 1 ${xRight} ${cy}`;
+
+    let ticks = '';
+    const numTicks = 16;
+    for (let i = 0; i <= numTicks; i++) {
+      const deg = 180 - (i / numTicks) * 180;
+      const rad = (deg * Math.PI) / 180;
+      const rIn = R + 13;
+      const rOut = R + (i % 4 === 0 ? 21 : 17);
+      const x1 = +(cx + rIn * Math.cos(rad)).toFixed(1);
+      const y1 = +(cy - rIn * Math.sin(rad)).toFixed(1);
+      const x2 = +(cx + rOut * Math.cos(rad)).toFixed(1);
+      const y2 = +(cy - rOut * Math.sin(rad)).toFixed(1);
+      const passed = (i / numTicks) <= ratio && consumed > 0;
+      const stroke = passed ? activeColor : (i % 4 === 0 ? '#9CA3AF' : '#D1D5DB');
+      const sw = i % 4 === 0 ? '2' : '1.4';
+      ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${stroke}" stroke-width="${sw}" stroke-linecap="round" />`;
+    }
+
+    const subLabel = isOver
+      ? `Excedido +${consumed - safeMax} kcal (límite ${safeMax})`
+      : `Quedan ${remaining.toLocaleString('es-ES')} de ${safeMax.toLocaleString('es-ES')} kcal`;
+
+    return `
+      <svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:320px;height:166px;display:block;margin:4px auto 0;background:transparent;">
+        ${ticks}
+        <path d="${arcD}" fill="none" stroke="${trackColor}" stroke-width="15" stroke-linecap="round" />
+        ${consumed > 0 ? `
+          <path d="${arcD}" fill="none" stroke="${activeColor}" stroke-width="15" stroke-linecap="round"
+                stroke-dasharray="${filledLength} ${halfCircumference}" />
+          <circle cx="${dotX}" cy="${dotY}" r="8.5" fill="${activeColor}" stroke="#FFFFFF" stroke-width="3" />
+        ` : `
+          <circle cx="${xLeft}" cy="${cy}" r="7" fill="#D1D5DB" stroke="#FFFFFF" stroke-width="2.5" />
+        `}
+        <text x="${cx}" y="${cy - 24}" text-anchor="middle" font-size="34" font-weight="800" fill="${isOver ? '#DC2626' : '#111111'}">${rawPct}%</text>
+        <text x="${cx}" y="${cy - 4}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${isOver ? '#DC2626' : '#71757D'}">${subLabel}</text>
+      </svg>
+    `;
+  }
+
+  function renderHoy(vp) {
+    const phase = getActivePhase();
+    const cal = getPhaseCalendar(phase);
+    const dayObj = cal.find(d => d.dateStr === state.selectedDate) || cal[0];
+    if (dayObj && dayObj.dateStr !== state.selectedDate) {
+      state.selectedDate = dayObj.dateStr;
+    }
+
+    const weekDays = cal.filter(d => d.week === dayObj.week);
+    const sum = getDaySummary(state.selectedDate, phase);
+    const { rec, t } = sum;
+    const latest = getLatestPhaseMetrics(phase);
+
+    const fatDiff = +(latest.fatMassKg - t.fatMassKg).toFixed(2);
+    const leanDiff = +(latest.leanMassKg - t.leanMassKg).toFixed(2);
+    const fatLostSoFar = Math.max(0, +(t.fatMassKg - latest.fatMassKg).toFixed(2));
+    const weightLostSoFar = Math.max(0, +(t.baseWeight - latest.weight).toFixed(2));
+    const targetFatLoss = Number(phase.targetFatLossKg) || 3.5;
+    const targetWeightLoss = Number(phase.targetWeightLossKg) || 5.0;
+    const targetWeightVal = Number(phase.targetWeight) || 65.0;
+    const fatProgressPct = targetFatLoss > 0 ? Math.min(100, Math.max(0, Math.round((fatLostSoFar / targetFatLoss) * 100))) : 100;
+    const weightProgressPct = targetWeightLoss > 0 ? Math.min(100, Math.max(0, Math.round((weightLostSoFar / targetWeightLoss) * 100))) : 100;
+    const combinedGoalPct = Math.round((fatProgressPct + weightProgressPct) / 2);
+
+    // Registro de pesaje específico de la semana seleccionada
+    const weekWeighIn = (phase.weeklyRecords || []).find(r => Number(r.week) === Number(dayObj.week));
+    const displayWeight = weekWeighIn ? Number(weekWeighIn.weight) : latest.weight;
+    const displayBf = weekWeighIn ? Number(weekWeighIn.bodyFat) : latest.bodyFat;
+    const goalMetHappy = sum.kcal > 0 && sum.kcal <= sum.allowedKcal && sum.deficit >= t.targetDeficit && sum.finalStatus !== 'fail';
+
+    const isOver = sum.kcal > sum.allowedKcal;
+    const kcalLeftBudget = Math.max(0, sum.allowedKcal - sum.kcal);
+    const pPct = Math.min(100, Math.round((sum.p / t.protMin) * 100));
+    const cPct = Math.min(100, Math.round((sum.c / t.carbMax) * 100));
+    const fPct = Math.min(100, Math.round((sum.f / t.fatMax) * 100));
+    const pLeft = Math.max(0, +(t.protMin - sum.p).toFixed(1));
+    const cLeft = Math.max(0, +(t.carbMax - sum.c).toFixed(1));
+    const fLeft = Math.max(0, +(t.fatMax - sum.f).toFixed(1));
+
+    vp.innerHTML = `
+      <!-- Resumen Diario Superior: Déficit a una sola línea con jerarquía y gasto total debajo -->
+      <section class="card">
+        <div class="row-between" style="margin-bottom:12px;">
+          <div>
+            <span class="card-sub" style="font-weight:700;display:block;">Resumen del Día · ${dayObj.shortLabel}</span>
+            <div style="white-space:nowrap;margin-top:2px;">
+              <strong style="font-size:28px;letter-spacing:-0.02em;line-height:1.15;color:${sum.deficit >= t.targetDeficit ? 'var(--green)' : 'var(--ink)'};">
+                ${sum.kcal > 0 ? `-${sum.deficit} kcal` : '0 kcal'}
+              </strong>
+              <span style="font-size:13px;font-weight:700;color:var(--ink-muted);margin-left:4px;">déficit hoy</span>
+            </div>
+            <p class="card-sub" style="font-size:12px;margin-top:3px;">
+              Gasto total: <strong>${sum.totalBurn.toLocaleString('es-ES')} kcal</strong> · Meta déficit: -${t.targetDeficit} kcal
+            </p>
+          </div>
+
+          ${goalMetHappy ? `
+            <div style="display:flex;align-items:center;gap:8px;padding:9px 13px;border-radius:18px;background:rgba(22,163,74,0.12);flex-shrink:0;">
+              <span style="font-size:26px;line-height:1;">😊</span>
+              <div style="line-height:1.2;">
+                <strong style="font-size:12px;display:block;color:var(--green);">Cumplido</strong>
+                <span style="font-size:11px;color:var(--ink-muted);">${sum.kcal}/${sum.allowedKcal}</span>
+              </div>
+            </div>
+          ` : ''}
+        </div>
+
+        <div class="grid-3">
+          <button type="button" class="soft-box" style="text-align:left;cursor:pointer;padding:12px 11px;border:1px solid ${sum.stepsOk ? 'rgba(22,163,74,0.4)' : 'var(--border)'};background:${sum.stepsOk ? 'rgba(22,163,74,0.08)' : '#FFFFFF'};" data-action="set-steps" data-val="${sum.stepsOk ? 0 : 8500}">
+            <span class="card-sub" style="font-size:11px;font-weight:700;display:block;">Pasos (+${sum.stepsKcal} kcal)</span>
+            <strong style="font-size:14.5px;display:block;margin-top:2px;color:${sum.stepsOk ? 'var(--green)' : 'var(--ink)'};">${Number(rec.steps || 0).toLocaleString('es-ES')}</strong>
+            <span style="font-size:10.5px;color:var(--ink-muted);display:block;margin-top:1px;">0,025 kcal/paso</span>
+          </button>
+
+          <button type="button" class="soft-box" style="text-align:left;cursor:pointer;padding:12px 11px;border:1px solid ${rec.creatine ? 'rgba(22,163,74,0.4)' : 'var(--border)'};background:${rec.creatine ? 'rgba(22,163,74,0.08)' : '#FFFFFF'};" data-action="toggle-habit" data-field="creatine">
+            <span class="card-sub" style="font-size:11px;font-weight:700;display:block;">Creatina (5g)</span>
+            <strong style="font-size:14.5px;display:block;margin-top:2px;color:${rec.creatine ? 'var(--green)' : 'var(--ink-muted)'};">${rec.creatine ? 'Tomada' : 'Pendiente'}</strong>
+            <span style="font-size:10.5px;color:var(--ink-muted);display:block;margin-top:1px;">Toca para marcar</span>
+          </button>
+
+          <button type="button" class="soft-box" style="text-align:left;cursor:pointer;padding:12px 11px;border:1px solid ${rec.workout ? 'rgba(22,163,74,0.4)' : 'var(--border)'};background:${rec.workout ? 'rgba(22,163,74,0.08)' : '#FFFFFF'};" data-action="toggle-habit" data-field="workout">
+            <span class="card-sub" style="font-size:11px;font-weight:700;display:block;">Entreno (${rec.workout ? '+' + sum.workoutKcal : '0'} kcal)</span>
+            <strong style="font-size:14.5px;display:block;margin-top:2px;color:${rec.workout ? 'var(--green)' : 'var(--ink-muted)'};">${rec.workout ? (rec.workoutType.includes('Pesas') && !rec.workoutType.includes('Calistenia') ? 'Pesas' : 'Calistenia') : 'Sin entreno'}</strong>
+            <span style="font-size:10.5px;color:var(--ink-muted);display:block;margin-top:1px;">Toca para activar</span>
+          </button>
+        </div>
+
+        ${sum.lowProteinAlert ? `
+          <div class="alert-amber" style="margin-top:10px;font-size:12.5px;">
+            <span><strong>Alerta Proteína:</strong> llevas <strong>${sum.p}g</strong> / ${t.protMin}g mínimos (faltan ${pLeft}g).</span>
+          </div>
+        ` : ''}
+      </section>
+
+      <!-- Tarjeta Resumen Objetivo: Peso Real vs Meta (65kg), % Grasa y Barra Doble (Grasa 3.5kg - Peso 5kg) -->
+      <section class="card">
+        <div class="row-between">
+          <div>
+            <p class="card-sub" style="font-size:12.5px;">
+              ${weekWeighIn
+                ? `Último pesaje registrado (Semana ${dayObj.week})`
+                : `Peso real actual · Base ${t.baseWeight.toFixed(1)} kg (${t.baseBodyFat.toFixed(1)}%)`}
+            </p>
+            <div style="display:flex;align-items:baseline;gap:10px;margin-top:3px;flex-wrap:wrap;">
+              <span style="font-size:28px;font-weight:800;letter-spacing:-0.02em;">
+                ${displayWeight.toFixed(1)} kg
+              </span>
+              <span style="font-size:15px;font-weight:800;color:var(--coral);">
+                ${displayBf.toFixed(1)}% grasa
+              </span>
+              <span class="badge badge-neutral" style="font-size:12px;">
+                Meta: ${targetWeightVal.toFixed(1)} kg
+              </span>
+            </div>
+          </div>
+
+          ${weekWeighIn ? `
+            <button type="button" class="btn-circle-sm" style="width:40px;height:40px;font-size:16px;background:var(--bg-pill);color:var(--ink);border:1px solid var(--border);" data-action="open-weight-modal" data-week="${dayObj.week}" title="Editar pesaje Semana ${dayObj.week}">✎</button>
+          ` : ''}
+        </div>
+
+        <!-- Barra Porcentaje de Meta Alcanzada (Grasa 3.5kg · Peso 5kg) -->
+        <div class="soft-box" style="margin-top:12px;padding:12px 14px;">
+          <div class="row-between" style="font-size:12.5px;">
+            <span style="font-weight:800;">Progreso hacia Meta</span>
+            <strong style="color:var(--green);font-size:13.5px;">${combinedGoalPct}% alcanzado</strong>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--ink-muted);font-weight:700;margin-top:4px;">
+            <span>Grasa: <strong style="color:var(--ink);">${fatLostSoFar.toFixed(2)} / ${targetFatLoss.toFixed(1)} kg</strong> (${fatProgressPct}%)</span>
+            <span>Peso: <strong style="color:var(--ink);">${weightLostSoFar.toFixed(2)} / ${targetWeightLoss.toFixed(1)} kg</strong> (${weightProgressPct}%)</span>
+          </div>
+          <div class="progress-track" style="height:9px;margin-top:8px;">
+            <div class="progress-fill" style="width:${combinedGoalPct}%;background:var(--green);"></div>
+          </div>
+        </div>
+
+        <!-- Gráfico Semana a Semana: Peso Real vs Meta (65kg) y % Grasa -->
+        <div class="soft-box" style="margin-top:10px;padding:12px 12px 8px;">
+          <div class="row-between">
+            <span style="font-size:12.5px;font-weight:800;">Evolución Semanal · Peso y % Grasa</span>
+            <span style="font-size:11px;color:var(--ink-muted);font-weight:700;">Real ${displayWeight.toFixed(1)}kg · Meta ${targetWeightVal.toFixed(1)}kg</span>
+          </div>
+          ${buildBodyGoalMiniChartSvg(phase, latest.sorted)}
+        </div>
+
+        <div class="grid-2" style="margin-top:10px;">
+          <div class="soft-box row-between" style="padding:12px;">
+            <div>
+              <span class="card-sub" style="display:block;font-size:11.5px;font-weight:700;">Masa Grasa</span>
+              <strong style="font-size:15px;">${(weekWeighIn ? Number(weekWeighIn.fatMassKg) : latest.fatMassKg).toFixed(2)} kg</strong>
+            </div>
+            <span class="badge ${fatDiff <= 0 ? 'badge-green' : 'badge-coral'}">${fatDiff <= 0 ? '' : '+'}${fatDiff.toFixed(2)} kg</span>
+          </div>
+          <div class="soft-box row-between" style="padding:12px;">
+            <div>
+              <span class="card-sub" style="display:block;font-size:11.5px;font-weight:700;">Masa Sin Grasa</span>
+              <strong style="font-size:15px;">${(weekWeighIn ? Number(weekWeighIn.leanMassKg) : latest.leanMassKg).toFixed(2)} kg</strong>
+            </div>
+            <span class="badge ${leanDiff >= -0.2 ? 'badge-green' : 'badge-coral'}">${leanDiff >= 0 ? '+' : ''}${leanDiff.toFixed(2)} kg</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Selector de Semana y Días con Código Semáforo (Verde / Rojo) -->
+      <section class="card">
+        <div class="row-between">
+          <div class="week-pills">
+            ${Array.from({ length: phase.weeks }, (_, idx) => {
+              const w = idx + 1;
+              const firstDate = cal[(w - 1) * 7].dateStr;
+              const wStats = getWeekComplianceStats(phase, cal, w);
+              const wCls = wStats.weekStatus === 'fail' ? 'week-fail' : (wStats.weekStatus === 'pass' ? 'week-pass' : '');
+              return `<button type="button" class="week-pill ${wCls} ${dayObj.week === w ? 'active' : ''}" data-action="select-day" data-date="${firstDate}">S${w}</button>`;
+            }).join('')}
+          </div>
+          ${(() => {
+            const curW = getWeekComplianceStats(phase, cal, dayObj.week);
+            return `<span class="badge ${curW.weekStatus === 'fail' ? 'badge-red' : (curW.weekStatus === 'pass' ? 'badge-green' : 'badge-neutral')}">S${dayObj.week}: ${curW.passCount}✓ / ${curW.failCount}✕</span>`;
+          })()}
+        </div>
+
+        <div class="days-grid">
+          ${weekDays.map(d => {
+            const ds = getDaySummary(d.dateStr, phase);
+            const isSel = d.dateStr === state.selectedDate;
+            let cCls = 'day-circle';
+            if (isSel) cCls += ' selected';
+            if (ds.finalStatus === 'pass') cCls += ' pass';
+            else if (ds.finalStatus === 'fail') cCls += ' fail';
+
+            let dotCls = 'day-dot';
+            if (ds.finalStatus === 'pass') dotCls += ' pass';
+            else if (ds.finalStatus === 'fail') dotCls += ' fail';
+            else if (ds.kcal > 0) dotCls += ' has-data';
+
+            return `
+              <button type="button" class="day-btn" data-action="select-day" data-date="${d.dateStr}">
+                <span class="day-letter">${d.dayLetter}</span>
+                <div class="${cCls}">${d.dayNum}</div>
+                <span class="${dotCls}"></span>
+              </button>
+            `;
+          }).join('')}
+        </div>
+      </section>
+
+      <!-- Monitor Calórico Semicircular Dinámico + Tarjetas de Macros -->
+      <section class="card">
+        <div class="row-between" style="margin-bottom:8px;">
+          <h2 class="card-title">Monitor de Calorías</h2>
+          <span class="badge ${sum.deficit >= t.targetDeficit ? 'badge-green' : 'badge-neutral'}">Déficit: -${sum.deficit} / -${t.targetDeficit} kcal</span>
+        </div>
+
+        <div class="row-between" style="align-items:flex-start;padding:0 4px;">
+          <div>
+            <span class="card-sub" style="display:block;font-weight:700;">Consumido</span>
+            <strong style="font-size:20px;color:var(--ink);">${sum.kcal.toLocaleString('es-ES')} kcal</strong>
+          </div>
+          <div style="text-align:right;">
+            <span class="card-sub" style="display:block;font-weight:700;">${isOver ? 'Excedido' : 'Restante'}</span>
+            <strong style="font-size:20px;color:${isOver ? 'var(--red)' : 'var(--green)'};">
+              ${isOver ? '+' + (sum.kcal - sum.allowedKcal) : kcalLeftBudget.toLocaleString('es-ES')} kcal
+            </strong>
+          </div>
+        </div>
+
+        ${buildCalorieArcGaugeSvg(sum.kcal, sum.allowedKcal)}
+
+        ${isOver ? `
+          <div class="soft-box" style="background:rgba(220,38,38,0.08);color:var(--ink);font-size:11.5px;margin-bottom:10px;">
+            <strong style="color:var(--red);">Excedido +${sum.kcal - sum.allowedKcal} kcal sobre tu déficit de ${t.targetDeficit} kcal:</strong> Añade pasos o entreno para aumentar tu gasto diario.
+          </div>
+        ` : ''}
+
+        ${sum.lowProteinAlert ? `
+          <div class="alert-amber" style="margin-bottom:10px;">
+            <span><strong>Proteína insuficiente (&lt;${t.protMin}g):</strong> Llevas ${sum.p}g efectivos (el colágeno no suma a proteína muscular).</span>
+          </div>
+        ` : ''}
+        <div class="grid-3" style="margin-top:8px;">
+          <!-- Proteínas (Coral) -->
+          <div class="soft-box" style="padding:14px 11px;background:#FFFFFF;border:1px solid var(--border);">
+            <span class="card-sub" style="font-size:11.5px;font-weight:700;display:block;color:var(--ink);">Proteínas</span>
+            <div style="display:flex;align-items:baseline;gap:2px;margin-top:5px;">
+              <strong style="font-size:21px;color:var(--ink);">${sum.p}</strong>
+              <span class="card-sub" style="font-size:12px;">/${t.protMin}g</span>
+            </div>
+            <div class="progress-track" style="height:7px;margin:8px 0 6px;">
+              <div class="progress-fill" style="width:${pPct}%;background:var(--coral);"></div>
+            </div>
+            <span class="card-sub" style="font-size:11px;">${pLeft}g restantes</span>
+          </div>
+
+          <!-- Carbohidratos (Ámbar) -->
+          <div class="soft-box" style="padding:14px 11px;background:#FFFFFF;border:1px solid var(--border);">
+            <span class="card-sub" style="font-size:11.5px;font-weight:700;display:block;color:var(--ink);">Carbohidratos</span>
+            <div style="display:flex;align-items:baseline;gap:2px;margin-top:5px;">
+              <strong style="font-size:21px;color:var(--ink);">${sum.c}</strong>
+              <span class="card-sub" style="font-size:12px;">/${t.carbMax}g</span>
+            </div>
+            <div class="progress-track" style="height:7px;margin:8px 0 6px;">
+              <div class="progress-fill" style="width:${cPct}%;background:var(--amber);"></div>
+            </div>
+            <span class="card-sub" style="font-size:11px;">${cLeft}g restantes</span>
+          </div>
+
+          <!-- Grasas (Morado) -->
+          <div class="soft-box" style="padding:14px 11px;background:#FFFFFF;border:1px solid var(--border);">
+            <span class="card-sub" style="font-size:11.5px;font-weight:700;display:block;color:var(--ink);">Grasas</span>
+            <div style="display:flex;align-items:baseline;gap:2px;margin-top:5px;">
+              <strong style="font-size:21px;color:var(--ink);">${sum.f}</strong>
+              <span class="card-sub" style="font-size:12px;">/${t.fatMax}g</span>
+            </div>
+            <div class="progress-track" style="height:7px;margin:8px 0 6px;">
+              <div class="progress-fill" style="width:${fPct}%;background:var(--purple);"></div>
+            </div>
+            <span class="card-sub" style="font-size:11px;">${fLeft}g restantes</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 Bloques de Comida: Desayuno, Comida, Snack, Cena (Con edición de registros) -->
+      <div class="row-between" style="padding:0 2px;">
+        <h2 class="card-title">Registro de Comidas</h2>
+        <button type="button" class="btn-pill-dark" style="padding:9px 14px;font-size:12.5px;" data-action="go-voice">Dictar comida</button>
+      </div>
+
+      ${MEAL_BLOCKS.map(block => {
+        const items = rec.meals
+          .map((m, i) => ({ m, i }))
+          .filter(x => (x.m.category || 'Comida') === block);
+        const bKcal = items.reduce((s, x) => s + (Number(x.m.kcal) || 0), 0);
+        const bProt = items.reduce((s, x) => s + (Number(x.m.p) || 0), 0);
+
+        return `
+          <section class="card" style="padding:18px;">
+            <div class="row-between">
+              <div>
+                <h3 class="card-title" style="font-size:15.5px;">${block}</h3>
+                <p class="card-sub" style="font-size:12.5px;">${bKcal} kcal · ${bProt.toFixed(1)}g proteína</p>
+              </div>
+              <div style="display:flex;gap:6px;">
+                <button type="button" class="btn-pill-soft" style="padding:8px 12px;font-size:12px;" data-action="open-manual-meal" data-cat="${block}">+ Manual</button>
+                <button type="button" class="btn-pill-dark" style="padding:8px 13px;font-size:12px;" data-action="open-food-modal" data-cat="${block}">+ Alimento</button>
+              </div>
+            </div>
+
+            ${items.length > 0 ? items.map(({ m, i }) => `
+              <div class="meal-item-row">
+                <div style="min-width:0;flex:1;">
+                  <p style="font-size:13.5px;font-weight:700;line-height:1.3;">${escapeHtml(m.description)}</p>
+                  <p class="card-sub" style="font-size:11.5px;margin-top:2px;">P ${m.p}g · C ${m.c}g · G ${m.f}g</p>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+                  <strong style="font-size:13.5px;margin-right:2px;">${m.kcal} kcal</strong>
+                  <button type="button" class="btn-del-xs" data-action="edit-logged-meal" data-idx="${i}" title="Editar registro">✎</button>
+                  <button type="button" class="btn-del-xs" data-action="delete-meal" data-idx="${i}" title="Eliminar registro">✕</button>
+                </div>
+              </div>
+            `).join('') : `<p class="card-sub" style="margin-top:8px;font-style:italic;">Sin alimentos en ${block.toLowerCase()}</p>`}
+          </section>
+        `;
+      }).join('')}
+
+      <!-- Actividad Física, Hábitos y Cumplimiento (Sin emojis) -->
+      <section class="card" style="display:flex;flex-direction:column;gap:12px;">
+        <div class="row-between">
+          <div>
+            <h2 class="card-title">Actividad y Check Diario</h2>
+            <p class="card-sub">Pasos, entreno, creatina, agua y cumplimiento</p>
+          </div>
+          <div style="display:flex;gap:4px;background:var(--bg-pill);padding:3px;border-radius:999px;">
+            <button type="button" class="btn-pill-soft" style="border:none;${sum.finalStatus === 'pass' ? 'background:var(--green);color:#fff;' : ''}" data-action="set-status" data-val="pass">Cumplí ✓</button>
+            <button type="button" class="btn-pill-soft" style="border:none;${sum.finalStatus === 'fail' ? 'background:var(--red);color:#fff;' : ''}" data-action="set-status" data-val="fail">Fallé ✕</button>
+          </div>
+        </div>
+
+        <div class="soft-box" style="display:flex;flex-direction:column;gap:8px;">
+          <div class="row-between">
+            <div>
+              <strong style="font-size:12px;display:block;">Pasos diarios (Meta: ${t.stepsGoal.toLocaleString('es-ES')})</strong>
+              <span class="card-sub">Gasto pasos: <strong>+${sum.stepsKcal} kcal</strong> (pasos × 0,025)</span>
+            </div>
+            <input type="number" step="500" min="0" id="inp-steps" value="${rec.steps || ''}" placeholder="0" class="input-field" style="width:92px;text-align:right;background:#fff;" />
+          </div>
+          <div class="grid-2">
+            <button type="button" class="btn-pill-soft" style="background:#fff;" data-action="set-steps" data-val="8500">8.500 pasos (+213 kcal)</button>
+            <button type="button" class="btn-pill-soft" style="background:#fff;" data-action="set-steps" data-val="10000">10.000 pasos (+250 kcal)</button>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <button type="button" class="habit-card ${rec.workout ? 'active' : ''}" data-action="toggle-habit" data-field="workout">
+            <strong style="font-size:12px;">Entreno</strong>
+            <strong style="font-size:11px;opacity:0.9;">${rec.workout ? '+' + sum.workoutKcal + ' kcal' : '0 kcal'}</strong>
+            <span style="font-size:10px;opacity:0.75;">${rec.workout ? escapeHtml(rec.workoutType) : 'Pulsa para elegir'}</span>
+          </button>
+
+          <button type="button" class="habit-card ${rec.creatine ? 'active' : ''}" data-action="toggle-habit" data-field="creatine">
+            <strong style="font-size:12px;">Creatina</strong>
+            <strong style="font-size:11px;opacity:0.9;">${rec.creatine ? '5g' : '0g'}</strong>
+            <span style="font-size:10px;opacity:0.75;">5g diarios</span>
+          </button>
+
+          <button type="button" class="habit-card ${Number(rec.water) >= 2.0 ? 'active' : ''}" data-action="step-water">
+            <strong style="font-size:12px;">Agua</strong>
+            <strong style="font-size:11px;opacity:0.9;">${Number(rec.water || 0).toFixed(1)}L</strong>
+            <span style="font-size:10px;opacity:0.75;">2.0–2.5 L</span>
+          </button>
+        </div>
+
+        ${rec.workout ? `
+          <div class="grid-3">
+            ${['Calistenia (+250 kcal)', 'Pesas (+220 kcal)', 'Calistenia + Pesas (+470 kcal)'].map(wt => `
+              <button type="button" class="btn-pill-soft" style="font-size:10px;padding:7px 4px;${rec.workoutType === wt ? 'background:var(--ink);color:#fff;' : ''}" data-action="set-workout-type" data-val="${wt}">
+                ${wt}
+              </button>
+            `).join('')}
+          </div>
+        ` : ''}
+      </section>
+    `;
+  }
+
+  /* ==========================================================================
+     7. VISTA 2: CHAT Y VOZ (REGISTRO INTELIGENTE CON BASE DE DATOS)
+     ========================================================================== */
+  let chatCategory = 'Desayuno';
+  let isListening = false;
+  let recognitionRef = null;
+  let pendingUnknownName = null;
+
+  function renderChat(vp) {
+    const sum = getDaySummary(state.selectedDate);
+    const remKcal = Math.max(0, sum.allowedKcal - sum.kcal);
+    const remProt = Math.max(0, Math.round(sum.t.protMin - sum.p));
+
+    vp.innerHTML = `
+      <section class="card" style="padding:12px;">
+        <div class="row-between" style="margin-bottom:8px;">
+          <span style="font-size:11px;font-weight:700;">Quedan hoy: <strong>${remKcal} kcal</strong> · <strong style="color:var(--coral);">${remProt}g P</strong></span>
+          <button type="button" class="btn-pill-soft" data-action="open-food-modal" data-cat="${chatCategory}">+ Selector g/uds</button>
+        </div>
+        <div class="grid-4">
+          ${MEAL_BLOCKS.map(b => `
+            <button type="button" class="btn-pill-soft" style="border:none;${chatCategory === b ? 'background:var(--ink);color:#fff;' : ''}" data-action="set-chat-cat" data-cat="${b}">
+              ${b}
+            </button>
+          `).join('')}
+        </div>
+      </section>
+
+      <section class="card" style="display:flex;flex-direction:column;gap:10px;">
+        <div class="chat-box" id="chat-scroll">
+          ${state.chatMessages.map(m => `
+            <div class="msg-bubble ${m.sender === 'user' ? 'msg-user' : 'msg-bot'}">${escapeHtml(m.text)}</div>
+          `).join('')}
+        </div>
+
+        ${pendingUnknownName ? `
+          <div class="soft-box" style="border:1.5px solid var(--coral);background:#fff;display:flex;flex-direction:column;gap:8px;">
+            <div class="row-between">
+              <strong style="font-size:12px;color:var(--coral);">Alimento nuevo: "${escapeHtml(pendingUnknownName)}"</strong>
+              <button type="button" class="btn-pill-soft" style="padding:2px 8px;" data-action="cancel-unknown">✕</button>
+            </div>
+            <p class="card-sub">Introduce sus macros por 100g / 100ml para guardarlo en tu base de datos:</p>
+            <div class="grid-4">
+              <input type="number" step="0.1" id="unk-kcal" class="input-field" placeholder="Kcal/100" />
+              <input type="number" step="0.1" id="unk-p" class="input-field" placeholder="Prot/100" />
+              <input type="number" step="0.1" id="unk-c" class="input-field" placeholder="Carb/100" />
+              <input type="number" step="0.1" id="unk-f" class="input-field" placeholder="Grasa/100" />
+            </div>
+            <div class="grid-2">
+              <input type="number" step="1" id="unk-unit-g" class="input-field" placeholder="g por unidad (opc.)" />
+              <button type="button" class="btn-pill-dark" data-action="save-unknown-food">Guardar y Registrar ✓</button>
+            </div>
+          </div>
+        ` : ''}
+
+        <div style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;">
+          <button type="button" class="btn-pill-soft" style="flex-shrink:0;" data-action="quick-prompt" data-text="¿Qué ceno hoy con mis macros restantes?">¿Qué ceno hoy?</button>
+          <button type="button" class="btn-pill-soft" style="flex-shrink:0;" data-action="quick-prompt" data-text="Tengo pereza de ir al gimnasio, dame motivación">Pereza gym</button>
+          <button type="button" class="btn-pill-soft" style="flex-shrink:0;" data-action="quick-prompt" data-text="Beneficios de caminar en ayunas">Caminar ayunas</button>
+          <button type="button" class="btn-pill-soft" style="flex-shrink:0;" data-action="quick-prompt" data-text="Tengo ansiedad o ganas de atracón dulce">Ansiedad dulce</button>
+        </div>
+
+        <form id="form-chat" style="display:flex;align-items:center;gap:6px;">
+          <button type="button" id="btn-mic" class="btn-pill-soft ${isListening ? 'mic-recording' : ''}" style="padding:10px 12px;font-size:11px;flex-shrink:0;" data-action="toggle-mic" title="Dictar por voz">${isListening ? 'Parar' : 'Voz'}</button>
+          <input type="text" id="chat-input" class="input-field" style="border-radius:999px;flex:1;" placeholder="Ej: 2 huevos, 100ml claras y 2 tostadas..." />
+          <button type="submit" class="btn-circle-sm" style="width:40px;height:40px;">➤</button>
+        </form>
+      </section>
+    `;
+
+    const box = document.getElementById('chat-scroll');
+    if (box) box.scrollTop = box.scrollHeight;
+  }
+
+  function normalizeSpokenSpanish(str) {
+    let s = str.toLowerCase();
+    const replacements = [
+      [/\bmedia lata\b/g, '0.5 lata'],
+      [/\bciento cincuenta\b/g, '150'],
+      [/\bdoscientos\b/g, '200'],
+      [/\btrescientos cincuenta\b/g, '350'],
+      [/\bcien\b/g, '100'],
+      [/\bsesenta\b/g, '60'],
+      [/\bcincuenta\b/g, '50'],
+      [/\btreinta\b/g, '30'],
+      [/\bcuatro\b/g, '4'],
+      [/\btres\b/g, '3'],
+      [/\bdos\b/g, '2'],
+      [/\b(un|uno|una)\b/g, '1'],
+      [/\bgramos\b/g, 'g'],
+      [/\bmililitros\b/g, 'ml']
+    ];
+    replacements.forEach(([rx, val]) => { s = s.replace(rx, val); });
+    return s;
+  }
+
+  function processChatText(rawText) {
+    const text = rawText.trim();
+    if (!text) return;
+
+    state.chatMessages.push({ id: Date.now() + '_u', sender: 'user', text });
+    const low = text.toLowerCase();
+
+    if (low.includes('ceno') || low.includes('restantes') || low.includes('qué como')) {
+      const sum = getDaySummary(state.selectedDate);
+      const remK = Math.max(0, sum.allowedKcal - sum.kcal);
+      const remP = Math.max(0, Math.round(sum.t.protMin - sum.p));
+      const msg = remK < 160
+        ? `Te quedan ${remK} kcal hoy. Opciones ligeras:\n• 150ml claras cuajadas (63 kcal · 16,5g P)\n• 1 yogurt griego + proteínas (60 kcal · 12g P)`
+        : `Te quedan ${remK} kcal y ${remP}g de proteína:\n• Opción 1 (~236 kcal · 47,6g P): Revuelto 200ml claras + 100g queso cottage + 1 lata atún.\n• Opción 2 (~290 kcal · 26,6g P): 1 lata caballa + 30g feta + 100g remolacha.`;
+      state.chatMessages.push({ id: Date.now() + '_b', sender: 'bot', text: msg });
+      saveState();
+      renderApp();
+      return;
+    }
+
+    if (low.includes('atrac') || low.includes('ansiedad') || low.includes('dulce')) {
+      state.chatMessages.push({
+        id: Date.now() + '_b',
+        sender: 'bot',
+        text: 'Frena 5 minutos y bebe un vaso grande de agua fría. Si quieres algo dulce dentro de tus macros:\n• 1 yogurt griego + proteínas (60 kcal · 12g P) + 5g cacao puro (19 kcal).\n• O 100g fresas congeladas (32 kcal) con 100g queso cottage (93 kcal · 13g P).'
+      });
+      saveState();
+      renderApp();
+      return;
+    }
+
+    if (low.includes('motivaci') || low.includes('pereza') || low.includes('gimnasio')) {
+      state.chatMessages.push({
+        id: Date.now() + '_b',
+        sender: 'bot',
+        text: 'Recuerda tu meta: bajar de 27,6% a ~23,5% de grasa manteniendo tus 50,97 kg de masa magra y tus dominadas.\nNo negocies contigo misma: ponte las zapatillas, haz 10 minutos de calentamiento y el cuerpo responde solo.'
+      });
+      saveState();
+      renderApp();
+      return;
+    }
+
+    if (low.includes('caminar') || low.includes('ayunas')) {
+      state.chatMessages.push({
+        id: Date.now() + '_b',
+        sender: 'bot',
+        text: 'Caminar en ayunas favorece la oxidación directa de ácidos grasos con insulina baja, activa tus +235 kcal extra de NEAT sin recortar comida y despeja la mente.'
+      });
+      saveState();
+      renderApp();
+      return;
+    }
+
+    const norm = normalizeSpokenSpanish(text);
+    let slot = chatCategory;
+    if (norm.includes('desayun')) slot = 'Desayuno';
+    else if (norm.includes('cen')) slot = 'Cena';
+    else if (norm.includes('snack') || norm.includes('meriend')) slot = 'Snack';
+    else if (norm.includes('comid') || norm.includes('almuerz')) slot = 'Comida';
+
+    const cleaned = norm
+      .replace(/^(para\s+)?(desayunar|desayun[eé]|comer|com[ií]|cenar|cen[eé]|merendar|merend[eé]|tom[eé]|añade|registra)\s+/i, '')
+      .replace(/\s+para\s+(desayunar|comer|cenar|merendar)\s*$/i, '')
+      .replace(/\s+y\s+/g, ', ')
+      .replace(/\s+con\s+/g, ', ');
+
+    const segments = cleaned.split(/[,;+]+/).map(s => s.trim()).filter(Boolean);
+    const foodsSorted = [...state.foods].sort((a, b) =>
+      Math.max(...b.aliases.map(x => x.length)) - Math.max(...a.aliases.map(x => x.length))
+    );
+
+    const matched = [];
+    const unknowns = [];
+
+    segments.forEach(seg => {
+      const found = foodsSorted.find(f => f.aliases.some(al => seg.includes(al.toLowerCase())));
+      if (found) {
+        const unitStr = found.isLiquid ? 'ml' : 'g';
+        const gMatch = seg.match(/(\d+(?:[.,]\d+)?)\s*(?:g|gr|ml)\b/);
+        const nMatch = seg.match(/(\d+(?:[.,]\d+)?)/);
+        let grams = 100;
+        let desc = '';
+
+        if (gMatch) {
+          grams = parseFloat(gMatch[1].replace(',', '.'));
+          desc = `${grams}${unitStr} ${found.name}`;
+        } else if (nMatch) {
+          const val = parseFloat(nMatch[1].replace(',', '.'));
+          if (found.unitName && found.unitGrams && val <= 15) {
+            grams = Math.round(val * found.unitGrams * 10) / 10;
+            const uLabel = val === 1 ? found.unitName : found.unitName + 's';
+            desc = `${val} ${uLabel} (${grams}${unitStr}) ${found.name}`;
+          } else {
+            grams = val > 15 ? val : val * 100;
+            desc = `${grams}${unitStr} ${found.name}`;
+          }
+        } else {
+          grams = (found.unitName && found.unitGrams) ? found.unitGrams : 100;
+          desc = (found.unitName && found.unitGrams)
+            ? `1 ${found.unitName} (${grams}${unitStr}) ${found.name}`
+            : `100${unitStr} ${found.name}`;
+        }
+
+        const m = calcFoodMacros(found, grams);
+        matched.push({ desc, ...m });
+      } else {
+        const cleanUnk = seg.replace(/(\d+(?:[.,]\d+)?)\s*(?:g|gr|ml|de|del|la|el|un|una)\b/g, '').trim();
+        if (cleanUnk.length >= 3) unknowns.push(cleanUnk);
+      }
+    });
+
+    if (matched.length > 0) {
+      const tot = matched.reduce((a, x) => ({
+        kcal: a.kcal + x.kcal,
+        p: Math.round((a.p + x.p) * 10) / 10,
+        c: Math.round((a.c + x.c) * 10) / 10,
+        f: Math.round((a.f + x.f) * 10) / 10
+      }), { kcal: 0, p: 0, c: 0, f: 0 });
+
+      const rec = ensureDay(state.selectedDate);
+      rec.meals.push({
+        category: slot,
+        description: matched.map(x => x.desc).join(' + '),
+        kcal: tot.kcal,
+        p: tot.p,
+        c: tot.c,
+        f: tot.f
+      });
+
+      const daySum = getDaySummary(state.selectedDate);
+      let reply = `Guardado en ${slot}:\n` +
+        matched.map(x => `• ${x.desc}: ${x.kcal} kcal (${x.p}g P)`).join('\n') +
+        `\n\nTotal añadido: ${tot.kcal} kcal · P ${tot.p}g · C ${tot.c}g · G ${tot.f}g\nAcumulado hoy: ${daySum.kcal}/${daySum.allowedKcal} kcal (${daySum.p}g P).`;
+
+      if (unknowns.length > 0) {
+        pendingUnknownName = unknowns[0];
+        reply += `\n\nNo tengo "${pendingUnknownName}" en la base de datos. Rellena sus macros abajo para guardarlo.`;
+      }
+      state.chatMessages.push({ id: Date.now() + '_b', sender: 'bot', text: reply });
+      showToast(`Añadido a ${slot}`);
+    } else if (unknowns.length > 0) {
+      pendingUnknownName = unknowns[0];
+      state.chatMessages.push({
+        id: Date.now() + '_b',
+        sender: 'bot',
+        text: `No encontré "${pendingUnknownName}" en tu lista. Completa sus macros por 100g abajo para añadirlo a la base de datos.`
+      });
+    } else {
+      state.chatMessages.push({
+        id: Date.now() + '_b',
+        sender: 'bot',
+        text: 'Dime qué alimentos y cantidades comiste (ej: "2 huevos y 100ml de claras") o usa "+ Selector g/uds".'
+      });
+    }
+
+    saveState();
+    renderApp();
+  }
+
+  function toggleVoiceRecognition() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+      showToast('Usa el micrófono del teclado de tu teléfono para dictar');
+      const inp = document.getElementById('chat-input');
+      if (inp) inp.focus();
+      return;
+    }
+
+    if (isListening && recognitionRef) {
+      try { recognitionRef.stop(); } catch (e) {}
+      isListening = false;
+      renderApp();
+      return;
+    }
+
+    try {
+      const rec = new SR();
+      rec.lang = 'es-ES';
+      rec.continuous = false;
+      rec.interimResults = true;
+      recognitionRef = rec;
+      isListening = true;
+      renderApp();
+
+      let finalTranscript = '';
+      rec.onresult = (ev) => {
+        let interim = '';
+        for (let i = ev.resultIndex; i < ev.results.length; i++) {
+          if (ev.results[i].isFinal) finalTranscript += ev.results[i][0].transcript + ' ';
+          else interim += ev.results[i][0].transcript;
+        }
+        const inp = document.getElementById('chat-input');
+        if (inp) inp.value = (finalTranscript + interim).trim();
+      };
+
+      rec.onerror = () => {
+        isListening = false;
+        showToast('No se pudo activar el micrófono; usa el teclado de voz');
+        renderApp();
+      };
+
+      rec.onend = () => {
+        isListening = false;
+        const captured = finalTranscript.trim();
+        if (captured) processChatText(captured);
+        else renderApp();
+      };
+
+      rec.start();
+    } catch (e) {
+      isListening = false;
+      renderApp();
+    }
+  }
+
+  /* ==========================================================================
+     8. VISTA 3: PROGRESO (GRÁFICAS SVG + TABLA SEMANAL + SCORECARD 5 SEMANAS)
+     ========================================================================== */
+  function buildWeightProjectionSvg(phase, sorted) {
+    const W = 360, H = 135, padX = 24, padY = 16;
+    const weeks = Number(phase.weeks) || 5;
+    const baseW = Number(phase.baseWeight) || 70.4;
+    const targetLoss = Number(phase.targetFatLossKg) || 3.0;
+    const minW = baseW - targetLoss - 1.2;
+    const maxW = baseW + 0.8;
+    const span = maxW - minW || 1;
+
+    const xOf = w => padX + (w / weeks) * (W - padX * 2);
+    const yOf = val => H - padY - ((val - minW) / span) * (H - padY * 2);
+
+    const projPts = [];
+    for (let w = 0; w <= weeks; w++) {
+      const expectedW = baseW - (targetLoss * (w / weeks));
+      projPts.push(`${xOf(w)},${yOf(expectedW)}`);
+    }
+
+    const realPts = sorted.map(r => `${xOf(Number(r.week))},${yOf(Number(r.weight))}`);
+
+    return `
+      <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:135px;overflow:visible;">
+        ${Array.from({ length: weeks + 1 }, (_, w) => `
+          <line x1="${xOf(w)}" y1="${padY}" x2="${xOf(w)}" y2="${H - padY}" stroke="#ECECE8" stroke-width="1" />
+          <text x="${xOf(w)}" y="${H - 2}" text-anchor="middle" font-size="9" fill="#6C706D">${w === 0 ? 'Ini' : 'S' + w}</text>
+        `).join('')}
+        <polyline fill="none" stroke="#9DA29E" stroke-width="2" stroke-dasharray="4 3" points="${projPts.join(' ')}" />
+        <polyline fill="none" stroke="#141414" stroke-width="2.5" stroke-linecap="round" points="${realPts.join(' ')}" />
+        ${sorted.map(r => `
+          <circle cx="${xOf(Number(r.week))}" cy="${yOf(Number(r.weight))}" r="4" fill="#E05A47" stroke="#fff" stroke-width="1.5" />
+        `).join('')}
+      </svg>
+    `;
+  }
+
+  function buildBodyCompSvg(phase, sorted) {
+    const W = 360, H = 135, padX = 24, padY = 16;
+    const weeks = Number(phase.weeks) || 5;
+    const baseLean = Number(phase.baseLeanMassKg) || 50.97;
+    const baseFat = Number(phase.baseFatMassKg) || 19.43;
+    const maxV = Math.max(baseLean + 1.5, 53);
+    const minV = Math.max(10, baseFat - 4.5);
+    const span = maxV - minV || 1;
+
+    const xOf = w => padX + (w / weeks) * (W - padX * 2);
+    const yOf = val => H - padY - ((val - minV) / span) * (H - padY * 2);
+
+    const leanPts = sorted.map(r => {
+      const f = r.fatMassKg != null ? Number(r.fatMassKg) : Number(r.weight) * (Number(r.bodyFat) / 100);
+      const l = r.leanMassKg != null ? Number(r.leanMassKg) : Number(r.weight) - f;
+      return `${xOf(Number(r.week))},${yOf(l)}`;
+    });
+
+    const fatPts = sorted.map(r => {
+      const f = r.fatMassKg != null ? Number(r.fatMassKg) : Number(r.weight) * (Number(r.bodyFat) / 100);
+      return `${xOf(Number(r.week))},${yOf(f)}`;
+    });
+
+    return `
+      <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:135px;overflow:visible;">
+        ${Array.from({ length: weeks + 1 }, (_, w) => `
+          <line x1="${xOf(w)}" y1="${padY}" x2="${xOf(w)}" y2="${H - padY}" stroke="#ECECE8" stroke-width="1" />
+          <text x="${xOf(w)}" y="${H - 2}" text-anchor="middle" font-size="9" fill="#6C706D">${w === 0 ? 'Ini' : 'S' + w}</text>
+        `).join('')}
+        <polyline fill="none" stroke="#22A06B" stroke-width="2.5" stroke-linecap="round" points="${leanPts.join(' ')}" />
+        <polyline fill="none" stroke="#E05A47" stroke-width="2.5" stroke-linecap="round" points="${fatPts.join(' ')}" />
+        ${sorted.map(r => {
+          const f = r.fatMassKg != null ? Number(r.fatMassKg) : Number(r.weight) * (Number(r.bodyFat) / 100);
+          const l = r.leanMassKg != null ? Number(r.leanMassKg) : Number(r.weight) - f;
+          return `
+            <circle cx="${xOf(Number(r.week))}" cy="${yOf(l)}" r="3.5" fill="#22A06B" />
+            <circle cx="${xOf(Number(r.week))}" cy="${yOf(f)}" r="3.5" fill="#E05A47" />
+          `;
+        }).join('')}
+      </svg>
+    `;
+  }
+
+  function renderProgreso(vp) {
+    const phase = getActivePhase();
+    const cal = getPhaseCalendar(phase);
+    const t = getPhaseTargets(phase);
+    const latest = getLatestPhaseMetrics(phase);
+
+    const diffW = +(latest.weight - t.baseWeight).toFixed(2);
+    const diffFatKg = +(latest.fatMassKg - t.fatMassKg).toFixed(2);
+    const diffLeanKg = +(latest.leanMassKg - t.leanMassKg).toFixed(2);
+
+    // Cálculo Scorecard 5 semanas (50% Dieta, 25% NEAT pasos, 25% Grasa/Rendimiento)
+    let loggedDays = 0, passedDays = 0, stepsTotal = 0, stepsDays = 0;
+    cal.forEach(d => {
+      const s = getDaySummary(d.dateStr, phase);
+      if (s.kcal > 0 || s.rec.steps > 0 || s.rec.workout) {
+        loggedDays++;
+        if (s.finalStatus === 'pass') passedDays++;
+        if (s.rec.steps > 0) {
+          stepsTotal += Number(s.rec.steps);
+          stepsDays++;
+        }
+      }
+    });
+
+    const adhPct = loggedDays > 0 ? Math.round((passedDays / loggedDays) * 100) : 0;
+    const avgSteps = stepsDays > 0 ? Math.round(stepsTotal / stepsDays) : 0;
+    const fatLost = Math.max(0, t.fatMassKg - latest.fatMassKg);
+    const targetLoss = Number(phase.targetFatLossKg) || 3.0;
+
+    const ptsDiet = Math.min(50, Math.round((adhPct / 85) * 50));
+    const ptsSteps = Math.min(25, Math.round((avgSteps / t.stepsGoal) * 25));
+    const ptsPhys = targetLoss > 0 ? Math.min(25, Math.round((fatLost / targetLoss) * 25)) : 25;
+    const totalPts = ptsDiet + ptsSteps + ptsPhys;
+
+    vp.innerHTML = `
+      <!-- Gráfica Peso Real vs Proyección -->
+      <section class="card">
+        <div class="row-between" style="margin-bottom:8px;">
+          <div>
+            <p class="card-sub">Curva Peso Real vs Objetivo Teórico</p>
+            <div style="display:flex;align-items:baseline;gap:8px;margin-top:2px;">
+              <strong style="font-size:22px;">${latest.weight.toFixed(1)} kg</strong>
+              <span class="badge ${diffW <= 0 ? 'badge-green' : 'badge-coral'}">${diffW <= 0 ? '' : '+'}${diffW.toFixed(1)} kg</span>
+            </div>
+          </div>
+          <button type="button" class="btn-pill-dark" data-action="open-weight-modal">+ Pesar</button>
+        </div>
+
+        ${buildWeightProjectionSvg(phase, latest.sorted)}
+        <div style="display:flex;justify-content:center;gap:14px;font-size:11px;color:var(--ink-muted);margin-top:6px;">
+          <span>● Peso Real</span>
+          <span>--- Proyección (-${targetLoss.toFixed(1)} kg)</span>
+        </div>
+      </section>
+
+      <!-- Gráfica Masa Grasa vs Masa Sin Grasa -->
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Masa Grasa vs Masa Sin Grasa</h2>
+            <p class="card-sub">Blindaje muscular mientras baja la grasa</p>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-bottom:8px;">
+          <div class="soft-box">
+            <span class="card-sub" style="font-size:10px;font-weight:700;">Masa Grasa Actual</span>
+            <p style="font-size:15px;font-weight:800;color:var(--coral);">${latest.fatMassKg.toFixed(2)} kg</p>
+            <span style="font-size:10.5px;font-weight:700;color:${diffFatKg <= 0 ? 'var(--green)' : 'var(--coral)'};">
+              ${diffFatKg <= 0 ? '' : '+'}${diffFatKg.toFixed(2)} kg vs inicio (${t.fatMassKg.toFixed(2)})
+            </span>
+          </div>
+          <div class="soft-box">
+            <span class="card-sub" style="font-size:10px;font-weight:700;">Masa Sin Grasa</span>
+            <p style="font-size:15px;font-weight:800;color:var(--green);">${latest.leanMassKg.toFixed(2)} kg</p>
+            <span style="font-size:10.5px;font-weight:700;color:${diffLeanKg >= -0.2 ? 'var(--green)' : 'var(--coral)'};">
+              ${diffLeanKg >= 0 ? '+' : ''}${diffLeanKg.toFixed(2)} kg vs inicio (${t.leanMassKg.toFixed(2)})
+            </span>
+          </div>
+        </div>
+
+        ${buildBodyCompSvg(phase, latest.sorted)}
+        <div style="display:flex;justify-content:center;gap:14px;font-size:11px;margin-top:6px;">
+          <span style="color:var(--green);font-weight:700;">● Masa Sin Grasa</span>
+          <span style="color:var(--coral);font-weight:700;">● Masa Grasa</span>
+        </div>
+      </section>
+
+      <!-- Tabla Comparativa Semanal -->
+      <section class="card">
+        <div class="card-header">
+          <h2 class="card-title">Historial Semanal</h2>
+          <button type="button" class="btn-pill-soft" data-action="open-weight-modal">+ Añadir Semana</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Sem</th>
+                <th>Peso</th>
+                <th>% Grasa</th>
+                <th style="color:var(--coral);">M. Grasa</th>
+                <th style="color:var(--green);">Sin Grasa</th>
+                <th>Δ Grasa</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${latest.sorted.map((r, idx) => {
+                const w = Number(r.weight);
+                const bf = Number(r.bodyFat);
+                const fKg = r.fatMassKg != null ? Number(r.fatMassKg) : +(w * bf / 100).toFixed(2);
+                const lKg = r.leanMassKg != null ? Number(r.leanMassKg) : +(w - fKg).toFixed(2);
+                const prev = idx > 0 ? latest.sorted[idx - 1] : null;
+                const prevF = prev ? (prev.fatMassKg != null ? Number(prev.fatMassKg) : +(Number(prev.weight) * Number(prev.bodyFat) / 100).toFixed(2)) : fKg;
+                const dF = +(fKg - prevF).toFixed(2);
+                return `
+                  <tr>
+                    <td><strong>${Number(r.week) === 0 ? 'Base' : 'S' + r.week}</strong></td>
+                    <td>${w.toFixed(1)} kg</td>
+                    <td>${bf.toFixed(1)}%</td>
+                    <td style="color:var(--coral);">${fKg.toFixed(2)} kg</td>
+                    <td style="color:var(--green);">${lKg.toFixed(2)} kg</td>
+                    <td style="color:${dF <= 0 ? 'var(--green)' : 'var(--coral)'};">${idx === 0 ? '—' : (dF <= 0 ? '' : '+') + dF.toFixed(2)}</td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Scorecard Final Ponderado -->
+      <section class="card" style="display:flex;flex-direction:column;gap:8px;">
+        <div class="row-between">
+          <div>
+            <h2 class="card-title">Evaluación Plan 5 Semanas</h2>
+            <p class="card-sub">50% Dieta · 25% Pasos NEAT · 25% Grasa/Fuerza</p>
+          </div>
+          <span class="badge" style="background:var(--ink);color:#fff;">${totalPts} / 100 pts</span>
+        </div>
+
+        <div class="soft-box row-between" style="font-size:12px;">
+          <span><strong>1. Adherencia Calórica & Proteica</strong> (≥85%)</span>
+          <strong style="color:${adhPct >= 85 ? 'var(--green)' : 'var(--ink)'};">${adhPct}% (${passedDays}/${loggedDays}d)</strong>
+        </div>
+        <div class="soft-box row-between" style="font-size:12px;">
+          <span><strong>2. Promedio Pasos NEAT</strong> (≥${t.stepsGoal.toLocaleString('es-ES')}/d)</span>
+          <strong style="color:${avgSteps >= t.stepsGoal ? 'var(--green)' : 'var(--ink)'};">${avgSteps.toLocaleString('es-ES')}/d</strong>
+        </div>
+        <div class="soft-box row-between" style="font-size:12px;">
+          <span><strong>3. Grasa Pura Perdida</strong> (Meta ${targetLoss.toFixed(1)} kg)</span>
+          <strong style="color:${fatLost >= targetLoss * 0.85 ? 'var(--green)' : 'var(--ink)'};">-${fatLost.toFixed(2)} kg</strong>
+        </div>
+
+        <div style="background:var(--ink);color:#fff;border-radius:18px;padding:14px;margin-top:4px;">
+          <p style="font-size:12.5px;font-weight:800;">¿Cumpliste el ciclo o quieres planificar el siguiente?</p>
+          <p style="font-size:11px;opacity:0.8;margin:4px 0 10px;">Abre una Fase de Mantenimiento para consolidar la pérdida o inicia un nuevo bloque con fechas personalizadas.</p>
+          <button type="button" class="btn-pill-soft" style="width:100%;background:#fff;font-weight:800;" data-action="open-new-phase">+ Nueva Fase / Extender Plan</button>
+        </div>
+      </section>
+
+      <!-- Hitos Semanales -->
+      <section class="card" style="display:flex;flex-direction:column;gap:8px;">
+        <h2 class="card-title">Hoja de Ruta Semanal</h2>
+        ${ROADMAP_5W.map(r => {
+          const recW = latest.sorted.find(x => Number(x.week) === r.week);
+          return `
+            <div class="soft-box">
+              <div class="row-between" style="margin-bottom:3px;">
+                <strong style="font-size:12px;">${r.title}</strong>
+                ${recW
+                  ? `<span class="badge badge-green">${Number(recW.weight).toFixed(1)} kg · ${Number(recW.bodyFat).toFixed(1)}%</span>`
+                  : `<span class="badge badge-neutral">Proy: ${(t.baseWeight - r.lossMax).toFixed(1)}–${(t.baseWeight - r.lossMin).toFixed(1)} kg</span>`}
+              </div>
+              <p class="card-sub">${r.note}</p>
+            </div>
+          `;
+        }).join('')}
+      </section>
+    `;
+  }
+
+  /* ==========================================================================
+     9. VISTA 4: OBJETIVOS Y BASE (DATOS BASE + GESTOR DE ALIMENTOS + JSON)
+     ========================================================================== */
+  let objFoodSearch = '';
+  let objFoodCat = 'ALL';
+
+  function renderObjetivos(vp) {
+    const phase = getActivePhase();
+    const t = getPhaseTargets(phase);
+
+    const foodsFiltered = state.foods.filter(f => {
+      const matchTxt = !objFoodSearch ||
+        f.name.toLowerCase().includes(objFoodSearch.toLowerCase()) ||
+        f.aliases.some(a => a.includes(objFoodSearch.toLowerCase()));
+      const matchCat = objFoodCat === 'ALL' || f.cat === objFoodCat;
+      return matchTxt && matchCat;
+    });
+
+    vp.innerHTML = `
+      <!-- Fases y Extensión del Plan -->
+      <section class="card" style="display:flex;flex-direction:column;gap:8px;">
+        <div class="row-between">
+          <div>
+            <h2 class="card-title">Fases del Plan</h2>
+            <p class="card-sub">Alterna fases o extiende tu plan al cumplir la meta</p>
+          </div>
+          <button type="button" class="btn-pill-dark" data-action="open-new-phase">+ Nueva Fase</button>
+        </div>
+
+        ${state.phases.map(p => {
+          const act = p.id === state.activePhaseId;
+          return `
+            <div class="soft-box row-between" style="cursor:pointer;${act ? 'background:var(--ink);color:#fff;' : ''}" data-action="switch-phase" data-id="${escapeHtml(p.id)}">
+              <div style="min-width:0;">
+                <strong style="font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(p.name)}</strong>
+                <span style="font-size:10.5px;opacity:0.75;">Inicio ${p.startDate} · ${p.weeks} sem · ${p.calMin}–${p.calMax} kcal</span>
+              </div>
+              <span class="badge ${act ? 'badge-green' : 'badge-neutral'}">${act ? 'Activa' : 'Abrir'}</span>
+            </div>
+          `;
+        }).join('')}
+      </section>
+
+      <!-- Editor Composición Base y Objetivos Diarios -->
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Datos Base y Objetivos</h2>
+            <p class="card-sub">Actualiza tu peso base o metas y todo se recalcula</p>
+          </div>
+        </div>
+
+        <form id="form-base-goals" style="display:flex;flex-direction:column;gap:10px;">
+          <div class="grid-2">
+            <div>
+              <label class="card-sub" style="display:block;font-weight:700;margin-bottom:3px;">Peso Base (kg)</label>
+              <input type="number" step="0.1" id="ob-weight" value="${t.baseWeight.toFixed(1)}" class="input-field" required />
+            </div>
+            <div>
+              <label class="card-sub" style="display:block;font-weight:700;margin-bottom:3px;color:var(--coral);">% Grasa Base</label>
+              <input type="number" step="0.1" id="ob-bf" value="${t.baseBodyFat.toFixed(1)}" class="input-field" required />
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <label class="card-sub" style="display:block;font-weight:700;margin-bottom:3px;">Masa Grasa Base (kg)</label>
+              <input type="number" step="0.01" id="ob-fat-kg" value="${t.fatMassKg.toFixed(2)}" class="input-field" required />
+            </div>
+            <div>
+              <label class="card-sub" style="display:block;font-weight:700;margin-bottom:3px;color:var(--green);">Masa Sin Grasa Base (kg)</label>
+              <input type="number" step="0.01" id="ob-lean-kg" value="${t.leanMassKg.toFixed(2)}" class="input-field" required />
+            </div>
+          </div>
+
+          <div class="grid-3">
+            <div>
+              <label class="card-sub" style="display:block;font-weight:700;margin-bottom:3px;">TMB Basal</label>
+              <input type="number" step="10" id="ob-bmr" value="${t.bmrKcal}" class="input-field" />
+            </div>
+            <div>
+              <label class="card-sub" style="display:block;font-weight:700;margin-bottom:3px;">Gasto Base Día</label>
+              <input type="number" step="10" id="ob-work-tdee" value="${t.baseTdee}" class="input-field" />
+            </div>
+            <div>
+              <label class="card-sub" style="display:block;font-weight:700;margin-bottom:3px;">Meta Grasa (-kg)</label>
+              <input type="number" step="0.1" id="ob-loss" value="${Number(phase.targetFatLossKg || 3.0).toFixed(1)}" class="input-field" />
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <label class="card-sub" style="display:block;font-weight:700;margin-bottom:3px;">Déficit Diario (kcal)</label>
+              <input type="number" step="25" id="ob-deficit" value="${t.targetDeficit}" class="input-field" />
+            </div>
+            <div>
+              <label class="card-sub" style="display:block;font-weight:700;margin-bottom:3px;">Kcal Base Ref. (sin act.)</label>
+              <input type="number" step="25" id="ob-cal-max" value="${t.baseTdee - t.targetDeficit}" class="input-field" />
+            </div>
+          </div>
+
+          <div class="grid-3">
+            <div>
+              <label class="card-sub" style="display:block;font-weight:700;margin-bottom:3px;">Prot Mín (g)</label>
+              <input type="number" id="ob-prot" value="${t.protMin}" class="input-field" />
+            </div>
+            <div>
+              <label class="card-sub" style="display:block;font-weight:700;margin-bottom:3px;">Carbs Máx (g)</label>
+              <input type="number" id="ob-carb" value="${t.carbMax}" class="input-field" />
+            </div>
+            <div>
+              <label class="card-sub" style="display:block;font-weight:700;margin-bottom:3px;">Grasas Máx (g)</label>
+              <input type="number" id="ob-fat" value="${t.fatMax}" class="input-field" />
+            </div>
+          </div>
+
+          <button type="submit" class="btn-pill-dark" style="width:100%;padding:12px;">Guardar Cambios de Objetivos</button>
+        </form>
+      </section>
+
+      <!-- Gestor Base de Datos de Alimentos (100g / 100ml) -->
+      <section class="card" style="display:flex;flex-direction:column;gap:10px;">
+        <div class="row-between">
+          <div>
+            <h2 class="card-title">Base de Alimentos (${state.foods.length})</h2>
+            <p class="card-sub">Estandarizados por 100g / 100ml y unidades</p>
+          </div>
+        </div>
+
+        <details class="soft-box">
+          <summary style="font-size:12px;font-weight:800;cursor:pointer;">+ Añadir alimento nuevo (base 100g / 100ml)</summary>
+          <form id="form-add-food-obj" style="display:flex;flex-direction:column;gap:7px;margin-top:8px;">
+            <input type="text" id="obf-name" class="input-field" style="background:#fff;" placeholder="Nombre alimento" required />
+            <div class="grid-3">
+              <select id="obf-cat" class="select-field" style="background:#fff;">
+                <option value="Desayuno">Desayuno</option>
+                <option value="Comida">Comida</option>
+                <option value="Snack">Snack</option>
+                <option value="Cena">Cena</option>
+              </select>
+              <select id="obf-liquid" class="select-field" style="background:#fff;">
+                <option value="g">Base 100 g</option>
+                <option value="ml">Base 100 ml</option>
+              </select>
+              <input type="number" step="1" id="obf-unit-g" class="input-field" style="background:#fff;" placeholder="g/ud (opc)" />
+            </div>
+            <div class="grid-4">
+              <input type="number" step="0.1" id="obf-kcal" class="input-field" style="background:#fff;" placeholder="Kcal/100" required />
+              <input type="number" step="0.1" id="obf-p" class="input-field" style="background:#fff;" placeholder="Prot/100" required />
+              <input type="number" step="0.1" id="obf-c" class="input-field" style="background:#fff;" placeholder="Carb/100" required />
+              <input type="number" step="0.1" id="obf-f" class="input-field" style="background:#fff;" placeholder="Grasa/100" required />
+            </div>
+            <button type="submit" class="btn-pill-dark" style="width:100%;">Guardar en Base de Datos</button>
+          </form>
+        </details>
+
+        <div style="display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;">
+          ${['ALL', ...MEAL_BLOCKS].map(c => `
+            <button type="button" class="btn-pill-soft" style="border:none;${objFoodCat === c ? 'background:var(--ink);color:#fff;' : ''}" data-action="filter-obj-cat" data-cat="${c}">
+              ${c === 'ALL' ? 'Todos' : c}
+            </button>
+          `).join('')}
+        </div>
+
+        <input type="text" id="ob-food-search" value="${escapeHtml(objFoodSearch)}" class="input-field" placeholder="Buscar alimento en base de datos..." />
+
+        <div style="display:flex;flex-direction:column;gap:6px;max-height:260px;overflow-y:auto;">
+          ${foodsFiltered.map(f => {
+          if (f.isPreset) {
+            const cTot = calcComboTotals(f.ingredients || [], 1);
+            return `
+              <div class="soft-box row-between">
+                <div style="min-width:0;">
+                  <div style="display:flex;align-items:center;gap:5px;">
+                    <span class="badge badge-coral" style="font-size:9.5px;padding:1px 6px;">1 Plato · ${f.cat}</span>
+                    <strong style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(f.name)}</strong>
+                  </div>
+                  <p class="card-sub" style="margin-top:2px;">1 plato (${cTot.totalGrams}g): <strong>${cTot.kcal} kcal</strong> · P ${cTot.p}g · C ${cTot.c}g · G ${cTot.f}g</p>
+                </div>
+                <div style="display:flex;gap:4px;flex-shrink:0;">
+                  <button type="button" class="btn-del-xs" data-action="edit-combo-from-obj" data-id="${escapeHtml(f.id)}" title="Editar plato">✎</button>
+                  <button type="button" class="btn-del-xs" data-action="delete-food" data-id="${escapeHtml(f.id)}">✕</button>
+                </div>
+              </div>
+            `;
+          }
+          const u = f.isLiquid ? 'ml' : 'g';
+          const uHint = (!f.isPreset && f.unitName && f.unitGrams) ? ` · 1 ${f.unitName}=${f.unitGrams}${u}` : '';
+          return `
+            <div class="soft-box row-between">
+              <div style="min-width:0;">
+                <div style="display:flex;align-items:center;gap:5px;">
+                  <span class="badge badge-neutral" style="font-size:9.5px;padding:1px 6px;">${f.cat}</span>
+                  <strong style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(f.name)}</strong>
+                </div>
+                <p class="card-sub" style="margin-top:2px;">100${u}: <strong>${Math.round(f.kcal100)} kcal</strong> · P ${f.p100}g · C ${f.c100}g · G ${f.f100}g${uHint}</p>
+              </div>
+              <button type="button" class="btn-del-xs" data-action="delete-food" data-id="${escapeHtml(f.id)}">✕</button>
+            </div>
+          `;
+        }).join('')}
+        </div>
+      </section>
+
+      <!-- Copia de Seguridad JSON -->
+      <section class="card grid-2">
+        <button type="button" class="btn-pill-soft" data-action="export-json">⬇ Exportar Copia JSON</button>
+        <label class="btn-pill-soft" style="cursor:pointer;">
+          ⬆ Importar JSON
+          <input type="file" id="import-json-file" accept=".json" style="display:none;" />
+        </label>
+      </section>
+    `;
+  }
+
+  /* ==========================================================================
+     10. LÓGICA DE MODALES (PESO/GRASA, PORCIONES G/UDS, NUEVA FASE)
+     ========================================================================== */
+  let mfTargetCat = 'Desayuno';
+  let mfMode = 'foods';
+  let mfSelectedFoodId = null;
+  let mfBasket = [];
+  let mfcEditingComboId = null;
+  let mfcLibraryOnly = false;
+  let mfcMultiplier = 1;
+  let mfcIngredients = [];
+  let mfcPendingBatch = {};
+  let editingMealIndex = null;
+
+  function openModal(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('open');
+  }
+
+  function closeModal(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('open');
+  }
+
+  function syncWeightModalMasses() {
+    const w = parseFloat(document.getElementById('fw-weight').value);
+    const bf = parseFloat(document.getElementById('fw-bf').value);
+    if (!isNaN(w) && !isNaN(bf) && w > 0) {
+      const fatKg = +(w * bf / 100).toFixed(2);
+      const leanKg = +(w - fatKg).toFixed(2);
+      document.getElementById('fw-fat-kg').value = fatKg.toFixed(2);
+      document.getElementById('fw-lean-kg').value = leanKg.toFixed(2);
+    }
+  }
+
+  function openWeightModal(weekNum) {
+    const phase = getActivePhase();
+    const latest = getLatestPhaseMetrics(phase);
+    const cal = getPhaseCalendar(phase);
+    const sel = document.getElementById('fw-week');
+
+    let opts = `<option value="0">Inicio Fase (${cal[0] ? cal[0].shortLabel : 'Base'})</option>`;
+    for (let w = 1; w <= phase.weeks; w++) {
+      const endD = cal[w * 7 - 1];
+      opts += `<option value="${w}" ${Number(weekNum) === w ? 'selected' : ''}>Semana ${w} (${endD ? endD.shortLabel : ''})</option>`;
+    }
+    sel.innerHTML = opts;
+    if (weekNum != null) sel.value = String(weekNum);
+
+    const existingRec = (phase.weeklyRecords || []).find(r => Number(r.week) === Number(weekNum));
+    const baseData = existingRec || latest;
+
+    document.getElementById('fw-weight').value = Number(baseData.weight).toFixed(1);
+    document.getElementById('fw-bf').value = Number(baseData.bodyFat).toFixed(1);
+    document.getElementById('fw-fat-kg').value = Number(baseData.fatMassKg).toFixed(2);
+    document.getElementById('fw-lean-kg').value = Number(baseData.leanMassKg).toFixed(2);
+    document.getElementById('fw-waist').value = existingRec && existingRec.waist ? existingRec.waist : '';
+    document.getElementById('fw-pullups').value = existingRec && existingRec.pullups ? existingRec.pullups : '';
+    document.getElementById('fw-update-base').checked = (Number(weekNum) === 0);
+
+    openModal('modal-weight');
+  }
+  function openFoodModal(cat, startMode) {
+    mfTargetCat = cat || 'Desayuno';
+    mfMode = startMode || 'foods';
+    mfSelectedFoodId = null;
+    mfBasket = [];
+    mfcEditingComboId = null;
+    mfcLibraryOnly = false;
+    editingMealIndex = null;
+    document.getElementById('mf-title').textContent = `Añadir a ${mfTargetCat}`;
+    document.getElementById('fnf-cat').value = mfTargetCat;
+    document.getElementById('mf-search').value = '';
+    document.getElementById('mf-portion-box').style.display = 'none';
+    document.getElementById('mf-manual-box').style.display = 'none';
+    document.getElementById('mf-combo-editor').style.display = 'none';
+    document.getElementById('mf-basket-box').style.display = 'none';
+    renderFoodModalList();
+    openModal('modal-food');
+  }
+
+  function openManualMealModal(cat) {
+    openFoodModal(cat, 'foods');
+    editingMealIndex = null;
+    document.getElementById('mfm-name').value = '';
+    document.getElementById('mfm-kcal').value = '';
+    document.getElementById('mfm-p').value = '';
+    document.getElementById('mfm-c').value = '';
+    document.getElementById('mfm-f').value = '';
+    document.getElementById('mf-manual-box').style.display = 'flex';
+  }
+
+  function openEditLoggedMeal(idx) {
+    const rec = ensureDay(state.selectedDate);
+    const meal = rec.meals[idx];
+    if (!meal) return;
+    openFoodModal(meal.category || 'Comida', 'foods');
+    editingMealIndex = idx;
+    document.getElementById('mf-title').textContent = `Editar en ${meal.category || 'Comida'}`;
+    document.getElementById('mfm-name').value = String(meal.description || '').replace(/^Manual\s*·\s*/i, '');
+    document.getElementById('mfm-kcal').value = meal.kcal || 0;
+    document.getElementById('mfm-p').value = meal.p || 0;
+    document.getElementById('mfm-c').value = meal.c || 0;
+    document.getElementById('mfm-f').value = meal.f || 0;
+    document.getElementById('mf-manual-box').style.display = 'flex';
+  }
+
+  function renderFoodModalList() {
+    const tFoods = document.getElementById('mf-tab-foods');
+    const tCombos = document.getElementById('mf-tab-combos');
+    tFoods.className = mfMode === 'foods' ? 'btn-pill-dark' : 'btn-pill-soft';
+    tCombos.className = mfMode === 'combos' ? 'btn-pill-dark' : 'btn-pill-soft';
+
+    const q = document.getElementById('mf-search').value.trim().toLowerCase();
+    const list = state.foods.filter(f => {
+      if (mfMode === 'combos' && !f.isPreset) return false;
+      if (mfMode === 'foods' && f.isPreset) return false;
+      if (q) return f.name.toLowerCase().includes(q) || f.aliases.some(a => a.includes(q));
+      return true;
+    });
+
+    const el = document.getElementById('mf-list');
+    let headerBtn = '';
+    if (mfMode === 'combos') {
+      headerBtn = `
+        <button type="button" class="btn-pill-dark" style="width:100%;margin-bottom:4px;" data-action="new-combo-blank">+ Crear Nuevo Plato / Combo desde cero</button>
+      `;
+    }
+
+    if (list.length === 0) {
+      el.innerHTML = headerBtn + `<p class="card-sub" style="text-align:center;padding:18px;">Sin resultados. Créalo arriba o en el formulario inferior.</p>`;
+      return;
+    }
+
+    el.innerHTML = headerBtn + list.map(f => {
+      const u = f.isLiquid ? 'ml' : 'g';
+      if (f.isPreset) {
+        const cTot = calcComboTotals(f.ingredients || [], 1);
+        return `
+          <div class="soft-box" style="display:flex;flex-direction:column;gap:6px;">
+            <div class="row-between">
+              <div style="min-width:0;">
+                <span class="badge badge-green" style="font-size:9.5px;padding:1px 6px;">1 plato · ${f.cat}</span>
+                <strong style="font-size:12px;display:block;margin-top:2px;">${escapeHtml(f.name)}</strong>
+                <span class="card-sub">1 plato: <strong>${cTot.kcal} kcal</strong> · P ${cTot.p}g · C ${cTot.c}g · G ${cTot.f}g</span>
+              </div>
+              <button type="button" class="btn-del-xs" data-action="open-combo-editor" data-id="${escapeHtml(f.id)}" title="Editar ingredientes o gramos">✎</button>
+            </div>
+            <div class="grid-2">
+              <button type="button" class="btn-pill-soft" style="background:#fff;" data-action="open-combo-editor" data-id="${escapeHtml(f.id)}">Ajustar gramos / ing.</button>
+              <button type="button" class="btn-pill-dark" data-action="quick-add-combo" data-id="${escapeHtml(f.id)}">+ 1 Plato (${cTot.kcal} kcal)</button>
+            </div>
+          </div>
+        `;
+      }
+      const uHint = (f.unitName && f.unitGrams) ? ` · 1 ${f.unitName}=${f.unitGrams}${u}` : '';
+      return `
+        <div class="soft-box row-between" style="cursor:pointer;" data-action="pick-food-portion" data-id="${escapeHtml(f.id)}">
+          <div style="min-width:0;">
+            <strong style="font-size:12.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(f.name)}</strong>
+            <span class="card-sub">100${u}: <strong>${Math.round(f.kcal100)} kcal</strong> · P ${f.p100}g · C ${f.c100}g · G ${f.f100}g${uHint}</span>
+          </div>
+          <span class="btn-pill-dark" style="padding:5px 10px;font-size:11px;flex-shrink:0;">Elegir</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function populateComboFoodSelect(filterStr) {
+    const q = String(filterStr || '').trim().toLowerCase();
+    const baseFoods = state.foods
+      .filter(f => !f.isPreset && (!q || f.name.toLowerCase().includes(q) || (f.aliases || []).some(a => a.includes(q))))
+      .sort((a, b) => a.name.localeCompare(b.name, 'es'));
+    const sel = document.getElementById('mfc-add-food-sel');
+    if (!sel) return;
+    if (baseFoods.length === 0) {
+      sel.innerHTML = `<option value="">Sin coincidencias</option>`;
+      return;
+    }
+    sel.innerHTML = baseFoods.map(f => {
+      const u = f.isLiquid ? 'ml' : 'g';
+      return `<option value="${escapeHtml(f.id)}">${escapeHtml(f.name)} (${Math.round(f.kcal100)} kcal/100${u})</option>`;
+    }).join('');
+  }
+
+  function updateMfcBulkBtnLabel() {
+    const btn = document.getElementById('mfc-bulk-add-btn');
+    if (!btn) return;
+    const count = Object.keys(mfcPendingBatch).length;
+    btn.textContent = count > 0 ? `+ Añadir (${count})` : '+ Añadir seleccionados';
+  }
+
+  function populateComboFoodSelect(filterStr) {
+    const q = String(filterStr || '').trim().toLowerCase();
+    const baseFoods = state.foods
+      .filter(f => !f.isPreset && (!q || f.name.toLowerCase().includes(q) || (f.aliases || []).some(a => a.includes(q))))
+      .sort((a, b) => a.name.localeCompare(b.name, 'es'));
+    const picker = document.getElementById('mfc-multi-picker');
+    if (!picker) return;
+    if (baseFoods.length === 0) {
+      picker.innerHTML = `<p class="card-sub" style="text-align:center;padding:8px;">Sin coincidencias</p>`;
+      updateMfcBulkBtnLabel();
+      return;
+    }
+    picker.innerHTML = baseFoods.map(f => {
+      const u = f.isLiquid ? 'ml' : 'g';
+      const defaultG = f.unitGrams ? f.unitGrams : 100;
+      const isChecked = Object.prototype.hasOwnProperty.call(mfcPendingBatch, f.id);
+      const curG = isChecked ? mfcPendingBatch[f.id] : defaultG;
+      return `
+        <div class="row-between" style="background:#fff;padding:6px 9px;border-radius:11px;border:1px solid ${isChecked ? 'var(--ink)' : 'var(--border)'};">
+          <label style="display:flex;align-items:center;gap:7px;flex:1;min-width:0;cursor:pointer;">
+            <input type="checkbox" data-mfc-chk-id="${escapeHtml(f.id)}" ${isChecked ? 'checked' : ''} style="width:16px;height:16px;accent-color:var(--ink);flex-shrink:0;" />
+            <div style="min-width:0;">
+              <strong style="font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(f.name)}</strong>
+              <span class="card-sub" style="font-size:10.5px;">${Math.round(f.kcal100)} kcal/100${u}</span>
+            </div>
+          </label>
+          <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">
+            <input type="number" step="1" min="1" value="${curG}" data-mfc-batch-g="${escapeHtml(f.id)}" class="input-field" style="width:62px;min-height:30px;padding:3px 6px;text-align:right;font-size:12px;background:var(--bg-app);" />
+            <span style="font-size:11px;font-weight:700;">${u}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+    updateMfcBulkBtnLabel();
+  }
+
+  function openComboEditor(comboId, libraryOnly) {
+    mfcLibraryOnly = Boolean(libraryOnly);
+    mfcMultiplier = 1;
+    mfcPendingBatch = {};
+    const filterInp = document.getElementById('mfc-food-filter');
+    if (filterInp) filterInp.value = '';
+    populateComboFoodSelect('');
+
+    if (comboId) {
+      const combo = state.foods.find(f => f.id === comboId);
+      if (!combo) return;
+      mfcEditingComboId = combo.id;
+      document.getElementById('mfc-badge').textContent = mfcLibraryOnly ? 'Editando Plato Guardado' : 'Personalizar Plato (1 unidad)';
+      document.getElementById('mfc-name').value = combo.name;
+      document.getElementById('mfc-cat').value = combo.cat || mfTargetCat;
+      mfcIngredients = (combo.ingredients || []).map(x => ({ foodId: x.foodId, grams: Number(x.grams) || 100 }));
+    } else {
+      mfcEditingComboId = null;
+      document.getElementById('mfc-badge').textContent = 'Nuevo Plato / Combo (1 unidad)';
+      document.getElementById('mfc-name').value = '';
+      document.getElementById('mfc-cat').value = mfTargetCat;
+      mfcIngredients = [];
+    }
+
+    document.getElementById('mf-portion-box').style.display = 'none';
+    document.getElementById('mf-combo-editor').style.display = 'flex';
+    renderComboEditorIngredients();
+  }
+
+  function renderComboEditorIngredients() {
+    const listEl = document.getElementById('mfc-ing-list');
+    if (mfcIngredients.length === 0) {
+      listEl.innerHTML = `<p class="card-sub" style="padding:10px;text-align:center;background:var(--bg-app);border-radius:12px;">Sin ingredientes aún. Elige un alimento abajo y pulsa "Añadir".</p>`;
+    } else {
+      listEl.innerHTML = mfcIngredients.map((ing, idx) => {
+        const food = state.foods.find(f => f.id === ing.foodId);
+        if (!food) return '';
+        const u = food.isLiquid ? 'ml' : 'g';
+        const effectiveG = Math.round(ing.grams * mfcMultiplier * 10) / 10;
+        const mac = calcFoodMacros(food, effectiveG);
+        return `
+          <div class="row-between" style="background:var(--bg-app);padding:10px 12px;border-radius:14px;">
+            <div style="min-width:0;flex:1;">
+              <strong style="font-size:13px;display:block;line-height:1.25;">${escapeHtml(food.name)}</strong>
+              <span class="card-sub" style="font-size:11.5px;">${mac.kcal} kcal · P ${mac.p}g · C ${mac.c}g · G ${mac.f}g</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+              <input type="number" step="1" min="1" value="${ing.grams}" data-mfc-ing-idx="${idx}" class="input-field" style="width:76px;min-height:38px;padding:6px 8px;text-align:right;background:#fff;font-size:14px;" />
+              <span style="font-size:12px;font-weight:800;">${u}</span>
+              <button type="button" class="btn-del-xs" style="min-width:34px;min-height:34px;" data-action="mfc-del-ing" data-idx="${idx}">✕</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    const tot = calcComboTotals(mfcIngredients, mfcMultiplier);
+    document.getElementById('mfc-tot-label').textContent = `Total (${mfcMultiplier} ${mfcMultiplier === 1 ? 'plato' : 'platos'})`;
+    document.getElementById('mfc-tot-kcal').textContent = `${tot.kcal} kcal`;
+    document.getElementById('mfc-tot-p').textContent = `${tot.p}g`;
+    document.getElementById('mfc-tot-c').textContent = `${tot.c}g`;
+    document.getElementById('mfc-tot-f').textContent = `${tot.f}g`;
+  }
+
+  function selectFoodForPortion(foodId) {
+    const food = state.foods.find(f => f.id === foodId);
+    if (!food) return;
+    mfSelectedFoodId = foodId;
+    const u = food.isLiquid ? 'ml' : 'g';
+    const isCollagen = Boolean(food.excludeProteinFromGoal) || food.id === 'f_39';
+
+    document.getElementById('mfp-name').textContent = food.name;
+    document.getElementById('mfp-base-desc').textContent = isCollagen
+      ? `Base 100${u}: ${Math.round(food.kcal100)} kcal · C ${food.c100}g · G ${food.f100}g (Colágeno: no suma a proteína muscular)`
+      : `Base 100${u}: ${Math.round(food.kcal100)} kcal · P ${food.p100}g · C ${food.c100}g · G ${food.f100}g`;
+    document.getElementById('mfp-grams-label').textContent = `Cantidad exacta (${food.isLiquid ? 'mililitros' : 'gramos'})`;
+    document.getElementById('mfp-grams-unit').textContent = u;
+
+    const unitSec = document.getElementById('mfp-unit-section');
+    let startGrams = 100;
+    if (food.unitName && food.unitGrams) {
+      unitSec.style.display = 'flex';
+      document.getElementById('mfp-unit-label').textContent = `Unidades (1 ${food.unitName} = ${food.unitGrams}${u})`;
+      document.getElementById('mfp-units').value = '1';
+      startGrams = food.unitGrams;
+    } else {
+      unitSec.style.display = 'none';
+    }
+
+    document.getElementById('mfp-grams').value = startGrams;
+    updatePortionPreview();
+    document.getElementById('mf-portion-box').style.display = 'flex';
+  }
+
+  function updatePortionPreview() {
+    const food = state.foods.find(f => f.id === mfSelectedFoodId);
+    if (!food) return;
+    const g = parseFloat(document.getElementById('mfp-grams').value) || 0;
+    const m = calcFoodMacros(food, g);
+    document.getElementById('mfp-calc-kcal').textContent = `${m.kcal} kcal`;
+    document.getElementById('mfp-calc-p').textContent = `${m.p}g`;
+    document.getElementById('mfp-calc-c').textContent = `${m.c}g`;
+    document.getElementById('mfp-calc-f').textContent = `${m.f}g`;
+  }
+
+  function buildPortionPayload() {
+    const food = state.foods.find(f => f.id === mfSelectedFoodId);
+    if (!food) return null;
+    const g = parseFloat(document.getElementById('mfp-grams').value) || 0;
+    if (g <= 0) return null;
+    const u = food.isLiquid ? 'ml' : 'g';
+    const m = calcFoodMacros(food, g);
+
+    let desc = `${g}${u} ${food.name}`;
+    if (food.unitName && food.unitGrams) {
+      const cnt = Math.round((g / food.unitGrams) * 10) / 10;
+      if (Number.isInteger(cnt) || cnt === 0.5 || cnt === 1.5 || cnt === 2.5) {
+        const uLabel = cnt === 1 ? food.unitName : food.unitName + 's';
+        desc = `${cnt} ${uLabel} (${g}${u}) ${food.name}`;
+      }
+    }
+    return { desc, grams: g, ...m };
+  }
+
+  function renderBasket() {
+    const box = document.getElementById('mf-basket-box');
+    if (mfBasket.length === 0) {
+      box.style.display = 'none';
+      return;
+    }
+    box.style.display = 'flex';
+    const tot = mfBasket.reduce((a, x) => ({
+      kcal: a.kcal + x.kcal,
+      p: Math.round((a.p + x.p) * 10) / 10
+    }), { kcal: 0, p: 0 });
+    document.getElementById('mfb-title').textContent = `Plato (${mfBasket.length} ingredientes)`;
+    document.getElementById('mfb-totals').textContent = `${tot.kcal} kcal · ${tot.p}g P`;
+    document.getElementById('mfb-list').innerHTML = mfBasket.map((it, idx) => `
+      <div class="row-between" style="background:#fff;padding:4px 8px;border-radius:10px;font-size:11px;">
+        <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(it.desc)} (${it.kcal} kcal)</span>
+        <button type="button" class="btn-del-xs" data-action="remove-basket-item" data-idx="${idx}">✕</button>
+      </div>
+    `).join('');
+  }
+
+  function openPhaseModal() {
+    const cur = getActivePhase();
+    const latest = getLatestPhaseMetrics(cur);
+    const cal = getPhaseCalendar(cur);
+    const lastDay = cal[cal.length - 1];
+    let nextStart = '2026-12-22';
+    if (lastDay) {
+      const dt = parseYMD(lastDay.dateStr);
+      dt.setDate(dt.getDate() + 1);
+      nextStart = formatYMD(dt);
+    }
+
+    const num = state.phases.length + 1;
+    document.getElementById('fp-type').value = 'maintenance';
+    document.getElementById('fp-name').value = `Fase ${num}: Mantenimiento (Consolidar)`;
+    document.getElementById('fp-start').value = nextStart;
+    document.getElementById('fp-weeks').value = '4';
+    document.getElementById('fp-weight').value = latest.weight.toFixed(1);
+    document.getElementById('fp-bf').value = latest.bodyFat.toFixed(1);
+    document.getElementById('fp-loss').value = '0.0';
+    document.getElementById('fp-cal').value = '2050';
+    document.getElementById('fp-prot').value = '130';
+    document.getElementById('fp-carb').value = '175';
+    document.getElementById('fp-fat').value = '65';
+    openModal('modal-phase');
+  }
+
+  /* ==========================================================================
+     11. DELEGACIÓN GLOBAL DE EVENTOS (CLICS, INPUTS, FORMULARIOS)
+     ========================================================================== */
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal-backdrop')) {
+      e.target.classList.remove('open');
+      return;
+    }
+
+    const navBtn = e.target.closest('[data-nav]');
+    if (navBtn) {
+      state.activeTab = navBtn.dataset.nav;
+      saveState();
+      renderApp();
+      return;
+    }
+
+    const actEl = e.target.closest('[data-action]');
+    if (!actEl) return;
+    const action = actEl.dataset.action;
+
+    if (action === 'open-weight-modal') {
+      openWeightModal(actEl.dataset.week || 1);
+    } else if (action === 'open-new-phase') {
+      openPhaseModal();
+    } else if (action === 'close-modal') {
+      closeModal(actEl.dataset.target);
+    } else if (action === 'recalc-fw-mass') {
+      syncWeightModalMasses();
+    } else if (action === 'select-day') {
+      state.selectedDate = actEl.dataset.date;
+      saveState();
+      renderApp();
+    } else if (action === 'open-food-modal') {
+      openFoodModal(actEl.dataset.cat);
+    } else if (action === 'open-manual-meal') {
+      openManualMealModal(actEl.dataset.cat);
+    } else if (action === 'edit-logged-meal') {
+      openEditLoggedMeal(Number(actEl.dataset.idx));
+    } else if (action === 'close-manual-box') {
+      editingMealIndex = null;
+      document.getElementById('mf-manual-box').style.display = 'none';
+    } else if (action === 'commit-manual-food') {
+      const mName = document.getElementById('mfm-name').value.trim() || 'Registro manual';
+      const kcal = parseFloat(document.getElementById('mfm-kcal').value) || 0;
+      const p = parseFloat(document.getElementById('mfm-p').value) || 0;
+      const c = parseFloat(document.getElementById('mfm-c').value) || 0;
+      const f = parseFloat(document.getElementById('mfm-f').value) || 0;
+      if (kcal <= 0 && p <= 0 && c <= 0 && f <= 0) {
+        showToast('Introduce al menos calorías o macros');
+        return;
+      }
+      const rec = ensureDay(state.selectedDate);
+      if (editingMealIndex != null && rec.meals[editingMealIndex]) {
+        rec.meals[editingMealIndex] = {
+          category: rec.meals[editingMealIndex].category || mfTargetCat,
+          description: mName,
+          kcal: Math.round(kcal),
+          p: Math.round(p * 10) / 10,
+          c: Math.round(c * 10) / 10,
+          f: Math.round(f * 10) / 10
+        };
+        editingMealIndex = null;
+        saveState();
+        closeModal('modal-food');
+        showToast('Registro actualizado ✓');
+        renderApp();
+        return;
+      }
+      rec.meals.push({
+        category: mfTargetCat,
+        description: `Manual · ${mName}`,
+        kcal: Math.round(kcal),
+        p: Math.round(p * 10) / 10,
+        c: Math.round(c * 10) / 10,
+        f: Math.round(f * 10) / 10
+      });
+      saveState();
+      closeModal('modal-food');
+      showToast(`Añadido manual a ${mfTargetCat} (${Math.round(kcal)} kcal) ✓`);
+      renderApp();
+    } else if (action === 'delete-meal') {
+      const rec = ensureDay(state.selectedDate);
+      rec.meals.splice(Number(actEl.dataset.idx), 1);
+      saveState();
+      showToast('Alimento eliminado');
+      renderApp();
+    } else if (action === 'set-status') {
+      const rec = ensureDay(state.selectedDate);
+      rec.statusOverride = actEl.dataset.val;
+      saveState();
+      showToast(actEl.dataset.val === 'pass' ? 'Día marcado Cumplido ✓' : 'Día marcado Fallado ✕');
+      renderApp();
+    } else if (action === 'set-steps') {
+      const rec = ensureDay(state.selectedDate);
+      rec.steps = Number(actEl.dataset.val);
+      saveState();
+      showToast(`${rec.steps.toLocaleString('es-ES')} pasos guardados`);
+      renderApp();
+    } else if (action === 'toggle-habit') {
+      const rec = ensureDay(state.selectedDate);
+      const f = actEl.dataset.field;
+      rec[f] = !rec[f];
+      saveState();
+      renderApp();
+    } else if (action === 'step-water') {
+      const rec = ensureDay(state.selectedDate);
+      const levels = [0, 0.5, 1.0, 1.5, 2.0, 2.5];
+      const cur = Number(rec.water) || 0;
+      rec.water = levels.find(v => v > cur) ?? 0;
+      saveState();
+      renderApp();
+    } else if (action === 'set-workout-type') {
+      const rec = ensureDay(state.selectedDate);
+      rec.workoutType = actEl.dataset.val;
+      saveState();
+      renderApp();
+    } else if (action === 'go-voice') {
+      state.activeTab = 'chat';
+      saveState();
+      renderApp();
+      setTimeout(toggleVoiceRecognition, 120);
+    } else if (action === 'set-chat-cat') {
+      chatCategory = actEl.dataset.cat;
+      renderApp();
+    } else if (action === 'quick-prompt') {
+      processChatText(actEl.dataset.text);
+    } else if (action === 'toggle-mic') {
+      toggleVoiceRecognition();
+    } else if (action === 'cancel-unknown') {
+      pendingUnknownName = null;
+      renderApp();
+    } else if (action === 'save-unknown-food') {
+      if (!pendingUnknownName) return;
+      const kcal = parseFloat(document.getElementById('unk-kcal').value) || 0;
+      const p = parseFloat(document.getElementById('unk-p').value) || 0;
+      const c = parseFloat(document.getElementById('unk-c').value) || 0;
+      const f = parseFloat(document.getElementById('unk-f').value) || 0;
+      const uG = parseFloat(document.getElementById('unk-unit-g').value) || null;
+      if (kcal <= 0) { showToast('Introduce las calorías por 100g'); return; }
+      const name = pendingUnknownName.charAt(0).toUpperCase() + pendingUnknownName.slice(1);
+      state.foods.unshift({
+        id: 'f_' + Date.now(),
+        isPreset: false,
+        cat: chatCategory,
+        name,
+        aliases: [pendingUnknownName.toLowerCase()],
+        isLiquid: false,
+        unitName: uG ? 'unidad' : null,
+        unitGrams: uG,
+        kcal100: kcal,
+        p100: p,
+        c100: c,
+        f100: f
+      });
+      const loggedText = pendingUnknownName;
+      pendingUnknownName = null;
+      saveState();
+      showToast(`"${name}" guardado en base de datos`);
+      processChatText(loggedText);
+    } else if (action === 'switch-mf-mode') {
+      mfMode = actEl.dataset.mode;
+      mfSelectedFoodId = null;
+      document.getElementById('mf-portion-box').style.display = 'none';
+      renderFoodModalList();
+    } else if (action === 'pick-food-portion') {
+      selectFoodForPortion(actEl.dataset.id);
+    } else if (action === 'clear-selected-food') {
+      mfSelectedFoodId = null;
+      document.getElementById('mf-portion-box').style.display = 'none';
+    } else if (action === 'step-unit') {
+      const inp = document.getElementById('mfp-units');
+      const next = Math.max(0.5, (parseFloat(inp.value) || 1) + Number(actEl.dataset.delta));
+      inp.value = next;
+      inp.dispatchEvent(new Event('input', { bubbles: true }));
+    } else if (action === 'set-units') {
+      const inp = document.getElementById('mfp-units');
+      inp.value = actEl.dataset.val;
+      inp.dispatchEvent(new Event('input', { bubbles: true }));
+    } else if (action === 'set-grams') {
+      const inp = document.getElementById('mfp-grams');
+      inp.value = actEl.dataset.val;
+      inp.dispatchEvent(new Event('input', { bubbles: true }));
+    } else if (action === 'commit-single-food') {
+      const item = buildPortionPayload();
+      if (!item) return;
+      const rec = ensureDay(state.selectedDate);
+      rec.meals.push({
+        category: mfTargetCat,
+        description: item.desc,
+        kcal: item.kcal,
+        p: item.p,
+        c: item.c,
+        f: item.f
+      });
+      saveState();
+      closeModal('modal-food');
+      showToast(`Añadido a ${mfTargetCat}: ${item.kcal} kcal ✓`);
+      renderApp();
+    } else if (action === 'add-to-basket') {
+      const item = buildPortionPayload();
+      if (!item) return;
+      mfBasket.push(item);
+      mfSelectedFoodId = null;
+      document.getElementById('mf-portion-box').style.display = 'none';
+      renderBasket();
+      showToast('Sumado al plato');
+    } else if (action === 'remove-basket-item') {
+      mfBasket.splice(Number(actEl.dataset.idx), 1);
+      renderBasket();
+    } else if (action === 'commit-basket') {
+      if (mfBasket.length === 0) return;
+      const tot = mfBasket.reduce((a, x) => ({
+        kcal: a.kcal + x.kcal,
+        p: Math.round((a.p + x.p) * 10) / 10,
+        c: Math.round((a.c + x.c) * 10) / 10,
+        f: Math.round((a.f + x.f) * 10) / 10
+      }), { kcal: 0, p: 0, c: 0, f: 0 });
+      const rec = ensureDay(state.selectedDate);
+      rec.meals.push({
+        category: mfTargetCat,
+        description: mfBasket.map(x => x.desc).join(' + '),
+        kcal: tot.kcal,
+        p: tot.p,
+        c: tot.c,
+        f: tot.f
+      });
+      saveState();
+      closeModal('modal-food');
+      showToast(`Plato registrado en ${mfTargetCat} ✓`);
+      renderApp();
+    } else if (action === 'save-basket-combo') {
+      if (mfBasket.length === 0) return;
+      const cname = mfBasket.map(x => x.desc).join(' + ');
+      const mappedIngs = mfBasket.map(x => ({ foodId: x.foodId, grams: x.grams || 100 })).filter(x => x.foodId);
+      state.foods.unshift({
+        id: 'combo_' + Date.now(),
+        isPreset: true,
+        cat: mfTargetCat,
+        name: cname,
+        aliases: [cname.toLowerCase()],
+        unitName: 'plato',
+        ingredients: mappedIngs
+      });
+      saveState();
+      showToast('Plato guardado como 1 unidad ★');
+    } else if (action === 'quick-add-combo') {
+      const f = state.foods.find(x => x.id === actEl.dataset.id);
+      if (!f) return;
+      const cTot = calcComboTotals(f.ingredients || [], 1);
+      const rec = ensureDay(state.selectedDate);
+      rec.meals.push({
+        category: mfTargetCat,
+        description: `1 plato · ${f.name}`,
+        kcal: cTot.kcal,
+        p: cTot.p,
+        c: cTot.c,
+        f: cTot.f
+      });
+      saveState();
+      closeModal('modal-food');
+      showToast(`1 plato añadido a ${mfTargetCat} (${cTot.kcal} kcal) ✓`);
+      renderApp();
+    } else if (action === 'new-combo-blank') {
+      openComboEditor(null, false);
+    } else if (action === 'open-combo-editor') {
+      openComboEditor(actEl.dataset.id, false);
+    } else if (action === 'edit-combo-from-obj') {
+      openFoodModal('Desayuno', 'combos');
+      openComboEditor(actEl.dataset.id, true);
+    } else if (action === 'close-combo-editor') {
+      document.getElementById('mf-combo-editor').style.display = 'none';
+    } else if (action === 'set-combo-mult') {
+      mfcMultiplier = Number(actEl.dataset.val) || 1;
+      renderComboEditorIngredients();
+    } else if (action === 'mfc-bulk-add') {
+      const ids = Object.keys(mfcPendingBatch);
+      if (ids.length === 0) {
+        showToast('Marca al menos un alimento de la lista');
+        return;
+      }
+      ids.forEach(fId => {
+        const g = Math.max(1, Number(mfcPendingBatch[fId]) || 100);
+        const existing = mfcIngredients.find(x => x.foodId === fId);
+        if (existing) {
+          existing.grams = Math.round((Number(existing.grams) + g) * 10) / 10;
+        } else {
+          mfcIngredients.push({ foodId: fId, grams: g });
+        }
+      });
+      mfcPendingBatch = {};
+      const filterInp = document.getElementById('mfc-food-filter');
+      populateComboFoodSelect(filterInp ? filterInp.value : '');
+      renderComboEditorIngredients();
+      showToast(`${ids.length} ${ids.length === 1 ? 'ingrediente añadido' : 'ingredientes añadidos'} al plato`);
+    } else if (action === 'mfc-del-ing') {
+      mfcIngredients.splice(Number(actEl.dataset.idx), 1);
+      renderComboEditorIngredients();
+    } else if (action === 'save-combo-library') {
+      if (mfcIngredients.length === 0) { showToast('Añade al menos 1 ingrediente'); return; }
+      const cName = document.getElementById('mfc-name').value.trim() || 'Plato personalizado';
+      const cCat = document.getElementById('mfc-cat').value || mfTargetCat;
+      if (mfcEditingComboId) {
+        const existing = state.foods.find(f => f.id === mfcEditingComboId);
+        if (existing) {
+          existing.name = cName;
+          existing.cat = cCat;
+          existing.aliases = [cName.toLowerCase()];
+          existing.ingredients = mfcIngredients.map(x => ({ foodId: x.foodId, grams: Number(x.grams) || 100 }));
+        }
+      } else {
+        const newCid = 'combo_' + Date.now();
+        mfcEditingComboId = newCid;
+        state.foods.unshift({
+          id: newCid,
+          isPreset: true,
+          cat: cCat,
+          name: cName,
+          aliases: [cName.toLowerCase()],
+          unitName: 'plato',
+          ingredients: mfcIngredients.map(x => ({ foodId: x.foodId, grams: Number(x.grams) || 100 }))
+        });
+      }
+      saveState();
+      renderFoodModalList();
+      showToast('Plato guardado en tu biblioteca ★');
+      if (mfcLibraryOnly) {
+        closeModal('modal-food');
+        renderApp();
+      }
+    } else if (action === 'commit-combo-day') {
+      if (mfcIngredients.length === 0) { showToast('Añade al menos 1 ingrediente'); return; }
+      const cName = document.getElementById('mfc-name').value.trim() || 'Plato personalizado';
+      const tot = calcComboTotals(mfcIngredients, mfcMultiplier);
+      const rec = ensureDay(state.selectedDate);
+      const plateLabel = mfcMultiplier === 1 ? '1 plato' : `${mfcMultiplier} platos`;
+      rec.meals.push({
+        category: mfTargetCat,
+        description: `${plateLabel} · ${cName} (${tot.details.join(', ')})`,
+        kcal: tot.kcal,
+        p: tot.p,
+        c: tot.c,
+        f: tot.f
+      });
+      saveState();
+      closeModal('modal-food');
+      showToast(`${plateLabel} añadido a ${mfTargetCat} (${tot.kcal} kcal) ✓`);
+      renderApp();
+    } else if (action === 'switch-phase') {
+      state.activePhaseId = actEl.dataset.id;
+      const p = getActivePhase();
+      state.selectedDate = p.startDate;
+      saveState();
+      renderApp();
+    } else if (action === 'filter-obj-cat') {
+      objFoodCat = actEl.dataset.cat;
+      renderApp();
+    } else if (action === 'delete-food') {
+      state.foods = state.foods.filter(f => f.id !== actEl.dataset.id);
+      saveState();
+      showToast('Alimento eliminado');
+      renderApp();
+    } else if (action === 'export-json') {
+      const uri = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(state, null, 2));
+      const a = document.createElement('a');
+      a.href = uri;
+      a.download = `loss-plan-backup-${formatYMD(new Date())}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      showToast('Copia JSON descargada');
+    }
+  });
+
+  // Eventos input & change delegados
+  document.addEventListener('input', (e) => {
+    const id = e.target.id;
+    if (e.target.hasAttribute('data-mfc-batch-g')) {
+      const fId = e.target.getAttribute('data-mfc-batch-g');
+      const g = Math.max(1, parseFloat(e.target.value) || 0);
+      mfcPendingBatch[fId] = g;
+      const chk = document.querySelector(`[data-mfc-chk-id="${CSS.escape(fId)}"]`);
+      if (chk && !chk.checked) {
+        chk.checked = true;
+        const row = chk.closest('.row-between');
+        if (row) row.style.borderColor = 'var(--ink)';
+      }
+      updateMfcBulkBtnLabel();
+      return;
+    }
+    if (e.target.hasAttribute('data-mfc-ing-idx')) {
+      const idx = Number(e.target.getAttribute('data-mfc-ing-idx'));
+      if (mfcIngredients[idx]) {
+        mfcIngredients[idx].grams = Math.max(1, parseFloat(e.target.value) || 0);
+        renderComboEditorIngredients();
+      }
+      return;
+    }
+    if (id === 'mfc-food-filter') {
+      populateComboFoodSelect(e.target.value);
+      return;
+    }
+    if (id === 'fw-weight' || id === 'fw-bf') {
+      syncWeightModalMasses();
+    } else if (id === 'fw-fat-kg') {
+      const w = parseFloat(document.getElementById('fw-weight').value);
+      const fKg = parseFloat(e.target.value);
+      if (!isNaN(w) && !isNaN(fKg) && w > 0) {
+        document.getElementById('fw-lean-kg').value = (w - fKg).toFixed(2);
+        document.getElementById('fw-bf').value = ((fKg / w) * 100).toFixed(1);
+      }
+    } else if (id === 'mf-search') {
+      renderFoodModalList();
+    } else if (id === 'mfp-grams') {
+      const food = state.foods.find(f => f.id === mfSelectedFoodId);
+      const g = parseFloat(e.target.value) || 0;
+      if (food && food.unitName && food.unitGrams) {
+        document.getElementById('mfp-units').value = +(g / food.unitGrams).toFixed(2);
+      }
+      updatePortionPreview();
+    } else if (id === 'mfp-units') {
+      const food = state.foods.find(f => f.id === mfSelectedFoodId);
+      const u = parseFloat(e.target.value) || 0;
+      if (food && food.unitGrams) {
+        document.getElementById('mfp-grams').value = Math.round(u * food.unitGrams * 10) / 10;
+      }
+      updatePortionPreview();
+    } else if (id === 'ob-weight' || id === 'ob-bf') {
+      const w = parseFloat(document.getElementById('ob-weight').value);
+      const bf = parseFloat(document.getElementById('ob-bf').value);
+      if (!isNaN(w) && !isNaN(bf) && w > 0) {
+        const fKg = +(w * bf / 100).toFixed(2);
+        document.getElementById('ob-fat-kg').value = fKg.toFixed(2);
+        document.getElementById('ob-lean-kg').value = (w - fKg).toFixed(2);
+      }
+    } else if (id === 'ob-fat-kg') {
+      const w = parseFloat(document.getElementById('ob-weight').value);
+      const fKg = parseFloat(e.target.value);
+      if (!isNaN(w) && !isNaN(fKg) && w > 0) {
+        document.getElementById('ob-lean-kg').value = (w - fKg).toFixed(2);
+        document.getElementById('ob-bf').value = ((fKg / w) * 100).toFixed(1);
+      }
+    } else if (id === 'ob-food-search') {
+      objFoodSearch = e.target.value;
+      renderApp();
+      const box = document.getElementById('ob-food-search');
+      if (box) { box.focus(); box.setSelectionRange(box.value.length, box.value.length); }
+    }
+  });
+
+  function buildPortionPayload() {
+    const food = state.foods.find(f => f.id === mfSelectedFoodId);
+    if (!food) return null;
+    const g = parseFloat(document.getElementById('mfp-grams').value) || 0;
+    if (g <= 0) return null;
+    const u = food.isLiquid ? 'ml' : 'g';
+    const m = calcFoodMacros(food, g);
+
+    let desc = `${g}${u} ${food.name}`;
+    if (food.unitName && food.unitGrams) {
+      const cnt = Math.round((g / food.unitGrams) * 10) / 10;
+      if (Number.isInteger(cnt) || cnt === 0.5 || cnt === 1.5 || cnt === 2.5) {
+        const uLabel = cnt === 1 ? food.unitName : food.unitName + 's';
+        desc = `${cnt} ${uLabel} (${g}${u}) ${food.name}`;
+      }
+    }
+    return { foodId: food.id, desc, grams: g, ...m };
+  }
+
+  document.addEventListener('change', (e) => {
+    const id = e.target.id;
+    if (e.target.hasAttribute('data-mfc-chk-id')) {
+      const fId = e.target.getAttribute('data-mfc-chk-id');
+      const row = e.target.closest('.row-between');
+      if (e.target.checked) {
+        const gInp = document.querySelector(`[data-mfc-batch-g="${CSS.escape(fId)}"]`);
+        mfcPendingBatch[fId] = Math.max(1, parseFloat(gInp ? gInp.value : 100) || 100);
+        if (row) row.style.borderColor = 'var(--ink)';
+      } else {
+        delete mfcPendingBatch[fId];
+        if (row) row.style.borderColor = 'var(--border)';
+      }
+      updateMfcBulkBtnLabel();
+      return;
+    }
+    if (id === 'phase-select') {
+      state.activePhaseId = e.target.value;
+      const p = getActivePhase();
+      state.selectedDate = p.startDate;
+      saveState();
+      renderApp();
+    } else if (id === 'inp-steps') {
+      const rec = ensureDay(state.selectedDate);
+      rec.steps = Number(e.target.value) || 0;
+      saveState();
+      renderApp();
+    } else if (id === 'fp-type') {
+      const num = state.phases.length + 1;
+      if (e.target.value === 'maintenance') {
+        document.getElementById('fp-name').value = `Fase ${num}: Mantenimiento (Consolidar)`;
+        document.getElementById('fp-loss').value = '0.0';
+        document.getElementById('fp-cal').value = '2050';
+        document.getElementById('fp-carb').value = '175';
+        document.getElementById('fp-fat').value = '65';
+      } else {
+        document.getElementById('fp-name').value = `Fase ${num}: Nueva Definición`;
+        document.getElementById('fp-loss').value = '2.5';
+        document.getElementById('fp-cal').value = '1600';
+        document.getElementById('fp-carb').value = '115';
+        document.getElementById('fp-fat').value = '55';
+      }
+    } else if (id === 'import-json-file') {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const parsed = JSON.parse(ev.target.result);
+          if (parsed && Array.isArray(parsed.phases)) {
+            state = Object.assign(createDefaultState(), parsed);
+            saveState();
+            showToast('Copia importada ✓');
+            renderApp();
+          }
+        } catch (err) {
+          showToast('Archivo JSON no válido');
+        }
+      };
+      reader.readAsText(file);
+    }
+  });
+
+  // Eventos submit delegados
+  document.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const id = e.target.id;
+
+    if (id === 'form-weight') {
+      const phase = getActivePhase();
+      const week = Number(document.getElementById('fw-week').value);
+      const weight = parseFloat(document.getElementById('fw-weight').value);
+      const bodyFat = parseFloat(document.getElementById('fw-bf').value);
+      const fatMassKg = parseFloat(document.getElementById('fw-fat-kg').value);
+      const leanMassKg = parseFloat(document.getElementById('fw-lean-kg').value);
+      const waist = document.getElementById('fw-waist').value;
+      const pullups = document.getElementById('fw-pullups').value;
+      const updBase = document.getElementById('fw-update-base').checked || week === 0;
+
+      if (!weight || weight < 35) return;
+      if (updBase) {
+        phase.baseWeight = weight;
+        phase.baseBodyFat = bodyFat;
+        phase.baseFatMassKg = fatMassKg;
+        phase.baseLeanMassKg = leanMassKg;
+      }
+
+      const idx = phase.weeklyRecords.findIndex(r => Number(r.week) === week);
+      const entry = { week, date: formatYMD(new Date()), weight, bodyFat, fatMassKg, leanMassKg, waist, pullups };
+      if (idx >= 0) phase.weeklyRecords[idx] = entry;
+      else phase.weeklyRecords.push(entry);
+
+      saveState();
+      closeModal('modal-weight');
+      showToast(`Guardado S${week}: ${weight.toFixed(1)} kg · ${fatMassKg.toFixed(2)} kg grasa`);
+      renderApp();
+    } else if (id === 'form-new-food-modal') {
+      const name = document.getElementById('fnf-name').value.trim();
+      const cat = document.getElementById('fnf-cat').value;
+      const isLiquid = document.getElementById('fnf-liquid').value === 'ml';
+      const unitG = parseFloat(document.getElementById('fnf-unit-g').value) || null;
+      const kcal100 = parseFloat(document.getElementById('fnf-kcal').value) || 0;
+      const p100 = parseFloat(document.getElementById('fnf-p').value) || 0;
+      const c100 = parseFloat(document.getElementById('fnf-c').value) || 0;
+      const f100 = parseFloat(document.getElementById('fnf-f').value) || 0;
+      if (!name || kcal100 <= 0) return;
+
+      const newId = 'f_' + Date.now();
+      state.foods.unshift({
+        id: newId,
+        isPreset: false,
+        cat,
+        name,
+        aliases: [name.toLowerCase()],
+        isLiquid,
+        unitName: unitG ? 'unidad' : null,
+        unitGrams: unitG,
+        kcal100,
+        p100,
+        c100,
+        f100
+      });
+      saveState();
+      e.target.reset();
+      mfMode = 'foods';
+      renderFoodModalList();
+      selectFoodForPortion(newId);
+      showToast(`"${name}" añadido a la base de datos`);
+    } else if (id === 'form-phase') {
+      const type = document.getElementById('fp-type').value;
+      const name = document.getElementById('fp-name').value.trim();
+      const startDate = document.getElementById('fp-start').value;
+      const weeks = Number(document.getElementById('fp-weeks').value) || 4;
+      const w = parseFloat(document.getElementById('fp-weight').value) || 67.0;
+      const bf = parseFloat(document.getElementById('fp-bf').value) || 23.5;
+      const loss = parseFloat(document.getElementById('fp-loss').value) || 0;
+      const calMax = Number(document.getElementById('fp-cal').value) || 2050;
+      const protMin = Number(document.getElementById('fp-prot').value) || 130;
+      const carbMax = Number(document.getElementById('fp-carb').value) || 175;
+      const fatMax = Number(document.getElementById('fp-fat').value) || 65;
+
+      const fatKg = +(w * bf / 100).toFixed(2);
+      const leanKg = +(w - fatKg).toFixed(2);
+      const newId = 'phase_' + Date.now();
+
+      state.phases.push({
+        id: newId,
+        type,
+        name,
+        startDate,
+        weeks,
+        baseWeight: w,
+        baseBodyFat: bf,
+        baseFatMassKg: fatKg,
+        baseLeanMassKg: leanKg,
+        targetFatLossKg: loss,
+        calMin: calMax - 100,
+        calMax,
+        protMin,
+        protMax: protMin + 10,
+        carbMin: Math.max(80, carbMax - 20),
+        carbMax,
+        fatMin: Math.max(45, fatMax - 5),
+        fatMax,
+        stepsGoal: 8000,
+        weeklyRecords: [{ week: 0, date: startDate, weight: w, bodyFat: bf, fatMassKg: fatKg, leanMassKg: leanKg, waist: '', pullups: '' }]
+      });
+
+      state.activePhaseId = newId;
+      state.selectedDate = startDate;
+      saveState();
+      closeModal('modal-phase');
+      showToast(`Activada: ${name}`);
+      renderApp();
+    } else if (id === 'form-chat') {
+      const inp = document.getElementById('chat-input');
+      if (inp && inp.value.trim()) {
+        const val = inp.value;
+        inp.value = '';
+        processChatText(val);
+      }
+    } else if (id === 'form-base-goals') {
+      const phase = getActivePhase();
+      const w = parseFloat(document.getElementById('ob-weight').value);
+      const bf = parseFloat(document.getElementById('ob-bf').value);
+      const fKg = parseFloat(document.getElementById('ob-fat-kg').value);
+      const lKg = parseFloat(document.getElementById('ob-lean-kg').value);
+      const bmrKcal = Number(document.getElementById('ob-bmr').value) || 1470;
+      const baseWorkTdee = Number(document.getElementById('ob-work-tdee').value) || 1850;
+      const targetDeficit = Number(document.getElementById('ob-deficit').value) || 800;
+      const calMax = Number(document.getElementById('ob-cal-max').value) || (baseWorkTdee - targetDeficit);
+      const loss = parseFloat(document.getElementById('ob-loss').value);
+      const protMin = Number(document.getElementById('ob-prot').value) || 135;
+      const carbMax = Number(document.getElementById('ob-carb').value) || 110;
+      const fatMax = Number(document.getElementById('ob-fat').value) || 50;
+
+      if (!w || w < 35) return;
+      phase.baseWeight = w;
+      phase.baseBodyFat = bf;
+      phase.baseFatMassKg = fKg;
+      phase.baseLeanMassKg = lKg;
+      phase.bmrKcal = bmrKcal;
+      phase.baseWorkTdee = baseWorkTdee;
+      phase.targetDeficit = targetDeficit;
+      phase.calMin = Math.max(1000, calMax - 50);
+      phase.calMax = calMax;
+      if (!isNaN(loss)) phase.targetFatLossKg = loss;
+      phase.protMin = protMin;
+      phase.carbMax = carbMax;
+      phase.fatMax = fatMax;
+
+      const idx0 = phase.weeklyRecords.findIndex(r => Number(r.week) === 0);
+      const rec0 = { week: 0, date: phase.startDate, weight: w, bodyFat: bf, fatMassKg: fKg, leanMassKg: lKg, waist: '', pullups: '' };
+      if (idx0 >= 0) phase.weeklyRecords[idx0] = rec0;
+      else phase.weeklyRecords.unshift(rec0);
+
+      saveState();
+      showToast('Objetivos y datos base actualizados');
+      renderApp();
+    } else if (id === 'form-add-food-obj') {
+      const name = document.getElementById('obf-name').value.trim();
+      const cat = document.getElementById('obf-cat').value;
+      const isLiquid = document.getElementById('obf-liquid').value === 'ml';
+      const unitG = parseFloat(document.getElementById('obf-unit-g').value) || null;
+      const kcal100 = parseFloat(document.getElementById('obf-kcal').value) || 0;
+      const p100 = parseFloat(document.getElementById('obf-p').value) || 0;
+      const c100 = parseFloat(document.getElementById('obf-c').value) || 0;
+      const f100 = parseFloat(document.getElementById('obf-f').value) || 0;
+      if (!name || kcal100 <= 0) return;
+
+      state.foods.unshift({
+        id: 'f_' + Date.now(),
+        isPreset: false,
+        cat,
+        name,
+        aliases: [name.toLowerCase()],
+        isLiquid,
+        unitName: unitG ? 'unidad' : null,
+        unitGrams: unitG,
+        kcal100,
+        p100,
+        c100,
+        f100
+      });
+      saveState();
+      showToast(`"${name}" guardado en base de datos ✓`);
+      renderApp();
+    }
+  });
+
+  // Inicialización inmediata y segura
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderApp);
+  } else {
+    renderApp();
+  }
+})();
+</script>
+</body>
+</html>
